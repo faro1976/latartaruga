@@ -3,6 +3,7 @@
 	<name>SensoryTurtlesWeb</name>
 	<comment></comment>
 	<projects>
+		<project>SensoryTurtlesClient</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
