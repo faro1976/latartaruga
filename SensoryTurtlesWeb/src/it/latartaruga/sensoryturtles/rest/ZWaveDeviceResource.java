@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import it.latartaruga.sensoryturtles.vo.ControllerRGBVO;
@@ -24,4 +25,12 @@ public class ZWaveDeviceResource {
 		deviceList.add(new RelayVO("cod4","relay2","4"));
         return deviceList;
     }
+	
+	@GET
+	@Path("/read")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RelayVO read(@QueryParam("deviceId")String deviceId) {
+        return new RelayVO("cod3","relay1","3");
+    }
+	
 }

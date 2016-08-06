@@ -9,7 +9,7 @@
     
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../img/favicon.ico">
+    <link rel="icon" href="../../img/favicon.ico">
 
     <title>Dashboard for LaTartarugaOnlus</title>
 
@@ -22,6 +22,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<script src="../../js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     
     <!-- color picker -->
@@ -35,7 +36,6 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -82,30 +82,27 @@
           <h1 class="page-header">Dashboard</h1>
 
 		<div class="row placeholders">
-			<div class="col-xs-6 col-sm-3 placeholder">
-				<input type="text" name="color" id="ColorInput-1" value="#ff0000" data-wheelcolorpicker data-wcp-layout="popup"  />
-				<input type="text" name="color" id="ColorInput-2" value="#ff0000" data-wheelcolorpicker data-wcp-layout="block"  />
-              	<h4>Label</h4>
-              	<span class="text-muted">Something else</span>
+			<div class="col-xs-10 col-sm-2 placeholder">
+				<div id="rgbControllersDiv" />							
             </div>
 		</div>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-				<input id="toggle-event-1"  type="checkbox" checked data-toggle="toggle" data-size="large" data-on="switch #1 On" data-off="switch #1 Off" data-onstyle="success" data-offstyle="danger">
+		<div class="row placeholders">
+			<div class="col-xs-10 col-sm-2 placeholder">
+				<div id="switchesDiv" />							
             </div>
-		  </div>
+		</div>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-				<input type="checkbox" checked data-toggle="toggle" data-size="large">
-				<input type="checkbox" checked data-toggle="toggle" data-size="normal">
-				<input type="checkbox" checked data-toggle="toggle" data-size="small">
-				<input type="checkbox" checked data-toggle="toggle" data-size="mini">		  
-				<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-				<input type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-play'></i> Play" data-off="<i class='fa fa-pause'></i> Pause">
-            </div>
-		  </div>
+       <div class="row placeholders">
+         	<div class="col-xs-6 col-sm-3 placeholder">
+			<input type="checkbox" checked data-toggle="toggle" data-size="large">
+			<input type="checkbox" checked data-toggle="toggle" data-size="normal">
+			<input type="checkbox" checked data-toggle="toggle" data-size="small">
+			<input type="checkbox" checked data-toggle="toggle" data-size="mini">		  
+			<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+			<input type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-play'></i> Play" data-off="<i class='fa fa-pause'></i> Pause">
+        	</div>
+		</div>
 
 		  
           <div class="row placeholders">
@@ -165,28 +162,46 @@
       </div>
     </div>
 
+
+
 	<script>
-		$(function() {
-			$('#ColorInput-1').change(function() {
-				alert('Color: ' + $(this).prop('value'));
-			});
-			$('#toggle-event-1').change(function() {
-				alert('Toggle: ' + $(this).prop('checked'));
-			});				
-		})
-		
 
 		var jsonData = $.ajax({
 			url: '/SensoryTurtlesWeb/rest/ZWaveDeviceResource/readList',
 			    dataType: 'json',
 			}).done(function (data) {
+				
+			var switchesContentString = "";
 			for (var key in data) {
 				var val = data[key];
-				alert (val['idZWave']);
+				console.log(val['description']);
+				
+		              	
+				if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
+					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"block\" />'	
+				          	+ '<h4>'+val['description']+'</h4>'
+			              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>';		              	
+					
+					$('#rgbControllersDiv').append(rgbContentString);
+					
+					$('#zwave-'+val['idZWave']).on('slidermove', function() {
+						var id = val['idZWave'].slice();
+						console.log('Color of ZWave id '+id+': ' + $(this).prop('value'));
+					});
+				} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
+					switchesContentString += '<input id=\"zwave-'+val['idZWave']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
+			          	+ '<h4>'+val['description']+'</h4>'
+		              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>';		              	
+					
+					$('#zwave-'+val['idZWave']).change(function() {
+						alert('Toggle of ZWave id '+val['idZWave']+': ' + $(this).prop('checked'));
+					});						
 				}
-				$('#dataTable tbody').html(contentString);				
-				$( "#progressbar" ).hide();
-			});		
+			}
+			
+			$('#switchesDiv').html(switchesContentString);
+				
+		});		
 	</script>				  
     
   </body>
