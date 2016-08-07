@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -11,9 +12,13 @@ import javax.ws.rs.core.MediaType;
 import it.latartaruga.sensoryturtles.vo.ControllerRGBVO;
 import it.latartaruga.sensoryturtles.vo.RelayVO;
 import it.latartaruga.sensoryturtles.vo.ZWaveDeviceVO;
+import it.latartaruga.sensoryturtles.zwave.ZWaveInvoker;
+import it.latartaruga.sensoryturtles.zwave.ZWaveInvoker.ZWaveCmd;
 
 @Path("/ZWaveDeviceResource")
 public class ZWaveDeviceResource {
+	ZWaveInvoker zwi = new ZWaveInvoker();
+	
 	@GET
 	@Path("/readList")
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,6 +36,14 @@ public class ZWaveDeviceResource {
     @Produces(MediaType.APPLICATION_JSON)
     public RelayVO read(@QueryParam("deviceId")String deviceId) {
         return new RelayVO("cod3","relay1","3");
+    }
+
+	
+	@POST
+	@Path("/invoke")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String invoke(@QueryParam("devId")String devId, @QueryParam("cmd")String cmd) throws Exception{
+		return zwi.invokeCmd(devId, ZWaveCmd.valueOf(cmd));
     }
 	
 }

@@ -78,6 +78,8 @@
             <li><a href="">More navigation</a></li>
           </ul>
         </div>
+        
+        
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
 
@@ -93,19 +95,7 @@
             </div>
 		</div>
 
-       <div class="row placeholders">
-         	<div class="col-xs-6 col-sm-3 placeholder">
-			<input type="checkbox" checked data-toggle="toggle" data-size="large">
-			<input type="checkbox" checked data-toggle="toggle" data-size="normal">
-			<input type="checkbox" checked data-toggle="toggle" data-size="small">
-			<input type="checkbox" checked data-toggle="toggle" data-size="mini">		  
-			<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-			<input type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-play'></i> Play" data-off="<i class='fa fa-pause'></i> Pause">
-        	</div>
-		</div>
-
-		  
-          <div class="row placeholders">
+		<div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
               <h4>Label</h4>
@@ -171,35 +161,57 @@
 			    dataType: 'json',
 			}).done(function (data) {
 				
-			var switchesContentString = "";
+			
 			for (var key in data) {
 				var val = data[key];
 				console.log(val['description']);
 				
 		              	
 				if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
-					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"block\" />'	
+					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
 				          	+ '<h4>'+val['description']+'</h4>'
-			              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>';		              	
+			              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>'
+			              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'		              	
 					
 					$('#rgbControllersDiv').append(rgbContentString);
 					
 					$('#zwave-'+val['idZWave']).on('slidermove', function() {
-						var id = val['idZWave'].slice();
-						console.log('Color of ZWave id '+id+': ' + $(this).prop('value'));
+						console.log('Color of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
+						$($(this).prop("id")+'-colordiv').css('background-color','red');
+						
+/*						$.ajax({
+							  url: "../../rest/ZWaveDeviceResource/invoke",
+							  data: { 
+								'devId': $(this).prop("id"), 
+								'cmd': $(this).prop('value')
+							   },
+							}).done(function(data) {
+							  console.log(data);
+						}); */						
 					});
 				} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
-					switchesContentString += '<input id=\"zwave-'+val['idZWave']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
+					var switchesContentString = '<input id=\"zwave-'+val['idZWave']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
 			          	+ '<h4>'+val['description']+'</h4>'
 		              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>';		              	
 					
+					$('#switchesDiv').append(switchesContentString);  	
+		              	
 					$('#zwave-'+val['idZWave']).change(function() {
-						alert('Toggle of ZWave id '+val['idZWave']+': ' + $(this).prop('checked'));
+						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
+						
+/*						$.ajax({
+							  url: "../../rest/ZWaveDeviceResource/invoke",
+							  data: { 
+								'devId': $(this).prop("id"), 
+								'cmd': $(this).prop('value')
+							   },
+							}).done(function(data) {
+							  console.log(data);
+						}); */					
+						
 					});						
 				}
 			}
-			
-			$('#switchesDiv').html(switchesContentString);
 				
 		});		
 	</script>				  
