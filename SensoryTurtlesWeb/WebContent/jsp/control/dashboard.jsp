@@ -14,21 +14,19 @@
     <title>Dashboard for LaTartarugaOnlus</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap.css" rel="stylesheet">
 
     <!-- Boostrap dashboard -->
     <link href="../../css/dashboard.css" rel="stylesheet">
 
+	<!-- JQuery -->
+	<script src="../../js/jquery-3.1.0.min.js"></script>	
+
 	<!-- Bootstrap core JavaScript
     ================================================== -->
-	<script src="../../js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
-    
-    <!-- color picker -->
-	<script type="text/javascript" src="../../js/jquery.wheelcolorpicker-2.5.1.min.js"></script>
-	<link type="text/css" rel="stylesheet" href="../../css/wheelcolorpicker.css" />
-    
+        
 	<!-- toogle -->
 	<link href="../../css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="../../js/bootstrap-toggle.min.js"></script>	
@@ -61,6 +59,7 @@
       </div>
     </nav>
 
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -83,74 +82,15 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
 
-		<div class="row placeholders">
-			<div class="col-xs-10 col-sm-2 placeholder">
-				<div id="rgbControllersDiv" />							
+		<div class="row">
+			<div class="col-xs-10 col-sm-2 ">
+				<div id="rgbControllersDiv" />											
             </div>
-		</div>
-
-		<div class="row placeholders">
-			<div class="col-xs-10 col-sm-2 placeholder">
+			<div class="col-xs-10 col-sm-2 ">
 				<div id="switchesDiv" />							
             </div>
+            
 		</div>
-
-		<div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div>
-
-          <h2 class="sub-header">Section title</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
 
@@ -168,18 +108,24 @@
 				
 		              	
 				if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
-					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
+/*					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
 				          	+ '<h4>'+val['description']+'</h4>'
 			              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>'
-			              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'		              	
+			              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'
+					$('#rgbControllersDiv').append(rgbContentString);*/
+					var iframe = document.createElement('iframe');
+			        var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];					
+					iframe.setAttribute("src", rgbPageUrl);
+					iframe.setAttribute("width", 500);
+					iframe.setAttribute("height", 230);
+					iframe.setAttribute("border", 0);					
+					document.getElementById("rgbControllersDiv").appendChild(iframe);
 					
-					$('#rgbControllersDiv').append(rgbContentString);
-					
-					$('#zwave-'+val['idZWave']).on('slidermove', function() {
+/*					$('#zwave-'+val['idZWave']).on('slidermove', function() {
 						console.log('Color of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
 						$($(this).prop("id")+'-colordiv').css('background-color','red');
 						
-/*						$.ajax({
+						$.ajax({
 							  url: "../../rest/ZWaveDeviceResource/invoke",
 							  data: { 
 								'devId': $(this).prop("id"), 
@@ -187,27 +133,27 @@
 							   },
 							}).done(function(data) {
 							  console.log(data);
-						}); */						
-					});
+						});						
+					});*/
 				} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
 					var switchesContentString = '<input id=\"zwave-'+val['idZWave']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
-			          	+ '<h4>'+val['description']+'</h4>'
-		              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>';		              	
+			          	+ '<b>'+val['description']+'</b>'
+		              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code>';		              	
 					
 					$('#switchesDiv').append(switchesContentString);  	
 		              	
 					$('#zwave-'+val['idZWave']).change(function() {
-						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
+						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
 						
-/*						$.ajax({
-							  url: "../../rest/ZWaveDeviceResource/invoke",
+						$.ajax({
+							  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
 							  data: { 
 								'devId': $(this).prop("id"), 
-								'cmd': $(this).prop('value')
+								'cmd': $(this).prop('checked')
 							   },
 							}).done(function(data) {
 							  console.log(data);
-						}); */					
+						}); 					
 						
 					});						
 				}
@@ -215,6 +161,6 @@
 				
 		});		
 	</script>				  
-    
+	
   </body>
 </html>

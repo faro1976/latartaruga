@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+
 import it.latartaruga.sensoryturtles.vo.ControllerRGBVO;
 import it.latartaruga.sensoryturtles.vo.RelayVO;
 import it.latartaruga.sensoryturtles.vo.ZWaveDeviceVO;
@@ -17,6 +19,7 @@ import it.latartaruga.sensoryturtles.zwave.ZWaveInvoker.ZWaveCmd;
 
 @Path("/ZWaveDeviceResource")
 public class ZWaveDeviceResource {
+	private static final Logger logger = Logger.getLogger(ZWaveDeviceResource.class);
 	ZWaveInvoker zwi = new ZWaveInvoker();
 	
 	@GET
@@ -39,11 +42,13 @@ public class ZWaveDeviceResource {
     }
 
 	
-	@POST
+	@GET
 	@Path("/invoke")
     @Produces(MediaType.APPLICATION_JSON)
     public String invoke(@QueryParam("devId")String devId, @QueryParam("cmd")String cmd) throws Exception{
-		return zwi.invokeCmd(devId, ZWaveCmd.valueOf(cmd));
+		System.out.println("devId:"+devId+";cmd:"+cmd+";");
+		//return zwi.invokeCmd(devId, ZWaveCmd.valueOf(cmd));
+		return "okrob";
     }
 	
 }
