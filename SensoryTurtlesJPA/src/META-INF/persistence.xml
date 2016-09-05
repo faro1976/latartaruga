@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="SensoryTurtlesJPA">
+		<class>it.latartaruga.sensoryturtles.entity.DeviceControllerRgbEntity</class>
+		<class>it.latartaruga.sensoryturtles.entity.DeviceControllerRgbEntityPK</class>
+		<class>it.latartaruga.sensoryturtles.entity.DeviceMultimediaEntity</class>
+		<class>it.latartaruga.sensoryturtles.entity.DeviceMultimediaEntityPK</class>
+		<class>it.latartaruga.sensoryturtles.entity.DeviceRelayEntity</class>
+		<class>it.latartaruga.sensoryturtles.entity.DeviceRelayEntityPK</class>
+		<class>it.latartaruga.sensoryturtles.entity.RoomEntity</class>
+	</persistence-unit>
+</persistence>
