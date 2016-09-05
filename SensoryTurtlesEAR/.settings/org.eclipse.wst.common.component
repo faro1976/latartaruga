@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="SensoryTurtlesEAR">
-        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="SensoryTurtlesEJB.jar" deploy-path="/" handle="module:/resource/SensoryTurtlesEJB/SensoryTurtlesEJB">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
@@ -8,8 +7,14 @@
         <dependent-module archiveName="SensoryTurtlesEJBClient.jar" deploy-path="/" handle="module:/resource/SensoryTurtlesEJBClient/SensoryTurtlesEJBClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="SensoryTurtlesWeb.war" deploy-path="/" handle="module:/resource/SensoryTurtlesWeb/SensoryTurtlesWeb">
+        <dependent-module archiveName="SensoryTurtlesServices.war" deploy-path="/" handle="module:/resource/SensoryTurtlesServices/SensoryTurtlesServices">
             <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="SensoryTurtlesClient.jar" deploy-path="/lib" handle="module:/resource/SensoryTurtlesClient/SensoryTurtlesClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="SensoryTurtlesJPA.jar" deploy-path="/lib" handle="module:/resource/SensoryTurtlesJPA/SensoryTurtlesJPA">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
