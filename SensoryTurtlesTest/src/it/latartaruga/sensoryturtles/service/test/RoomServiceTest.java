@@ -78,11 +78,13 @@ public class RoomServiceTest extends BaseTest<TestDaoFactoryTurtles,TestReposito
 	public void AtestRicercaRooms() throws Exception {
 		try {
 			IRequestContext requestContext = new RequestContext("JUNIT", null, null, "1", null);
-			IOffset offset = new Offset(1, Integer.MAX_VALUE);
+			IOffset offset = new Offset(0, Integer.MAX_VALUE);
 			IPagedRequest<String> pagedRequest = new PagedRequest(requestContext,offset,null,null);
 			IPagedResponse<List<? extends Room>> pagedResponse = roomService.ricercaRooms(pagedRequest);
 									
 			Assert.assertTrue(pagedResponse.getTotalCount() != 0);
+			
+			Assert.assertTrue(pagedResponse.getTotalCount()==pagedResponse.getResult().size());
 			
 			pagedResponse.getResult().forEach(room-> {
 				System.out.println("ID:" + room.getIdRoom() + " CODE:" + room.getCode() + " DESCRIPTION:" +  room.getDescription());

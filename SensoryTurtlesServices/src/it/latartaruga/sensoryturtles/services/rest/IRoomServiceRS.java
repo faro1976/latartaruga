@@ -11,6 +11,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import it.framework.client.service.impl.RestFault;
+import it.framework.client.service.inferf.IPagedResponse;
 import it.latartaruga.sensoryturtles.model.ControllerRGB;
 import it.latartaruga.sensoryturtles.model.Multimedia;
 import it.latartaruga.sensoryturtles.model.Relay;
@@ -19,11 +21,11 @@ import it.latartaruga.sensoryturtles.model.Room;
 @Path("Configuration")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
-public interface IRoomService {
+public interface IRoomServiceRS {
 	
 	 @GET
 	 @Path("Rooms")
-	 public List<Room> getRooms();
+	 public IPagedResponse<List<? extends Room>> getRooms()  throws RestFault;
 
 	 @GET
 	 @Path("Room/{idRoom}")
