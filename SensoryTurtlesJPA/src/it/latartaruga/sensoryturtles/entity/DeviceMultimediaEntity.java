@@ -25,7 +25,7 @@ public class DeviceMultimediaEntity implements Serializable {
 
 	//bi-directional many-to-one association to RoomEntity
 	@ManyToOne
-	@JoinColumn(name="idROOM")
+	@JoinColumn(name="idROOM",insertable=false, updatable=false)
 	private RoomEntity room;
 
 	public DeviceMultimediaEntity() {
