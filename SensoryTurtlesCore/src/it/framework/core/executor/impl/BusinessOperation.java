@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.framework.client.service.impl.OperationException;
-import it.framework.client.service.inferf.IRequest;
 import it.framework.client.service.inferf.IRequestParameter;
 import it.framework.client.service.inferf.IResultStatus;
-import it.framework.client.service.inferf.ResultStatus;
 import it.framework.core.executor.interf.IOperation;
 
 public abstract class BusinessOperation<P, R> implements IOperation<R> {
