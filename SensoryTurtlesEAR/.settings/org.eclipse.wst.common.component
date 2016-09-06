@@ -17,5 +17,20 @@
         <dependent-module archiveName="SensoryTurtlesJPA.jar" deploy-path="/lib" handle="module:/resource/SensoryTurtlesJPA/SensoryTurtlesJPA">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="SensoryTurtlesCore.jar" deploy-path="/lib" handle="module:/resource/SensoryTurtlesCore/SensoryTurtlesCore">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="guava-19.0.jar" deploy-path="/lib" handle="module:/classpath/lib/SensoryTurtlesExtlib/guava/guava-19.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="log4j-api-2.5.jar" deploy-path="/lib" handle="module:/classpath/lib/SensoryTurtlesExtlib/log4j/log4j-api-2.5.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="log4j-1.2.8.jar" deploy-path="/lib" handle="module:/classpath/lib/SensoryTurtlesExtlib/log4j/log4j-1.2.8.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-lang3-3.4.jar" deploy-path="/lib" handle="module:/classpath/lib/SensoryTurtlesExtlib/apache/commons-lang3-3.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
