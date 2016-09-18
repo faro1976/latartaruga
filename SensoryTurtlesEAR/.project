@@ -5,7 +5,10 @@
 	<projects>
 		<project>SensoryTurtlesEJB</project>
 		<project>SensoryTurtlesEJBClient</project>
-		<project>SensoryTurtlesWeb</project>
+		<project>SensoryTurtlesServices</project>
+		<project>SensoryTurtlesClient</project>
+		<project>SensoryTurtlesJPA</project>
+		<project>SensoryTurtlesCore</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,0 +1,13 @@
+Collegarsi con utente root e lanciare i seguenti comadi :
+
+CREATE DATABASE SENSORYTURTLES;
+
+GRANT ALL
+ON sensoryturtles.*
+TO 'turtles'@'%'
+IDENTIFIED BY 'turtles';
+
+SHOW GRANTS FOR 'turtles';
+
+
+
