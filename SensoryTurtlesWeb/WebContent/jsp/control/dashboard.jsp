@@ -18,6 +18,10 @@
 
     <!-- Boostrap dashboard -->
     <link href="../../css/dashboard.css" rel="stylesheet">
+    
+    <!-- Boostrap player buttons -->
+    <link href="../../css/font-awesome.min.css" rel="stylesheet">
+	<script src="../../js/d3.min.js"></script>    
 
 	<!-- JQuery -->
 	<script src="../../js/jquery-3.1.0.min.js"></script>	
@@ -29,68 +33,80 @@
         
 	<!-- toogle -->
 	<link href="../../css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="../../js/bootstrap-toggle.min.js"></script>	
+	<script src="../../js/bootstrap-toggle.min.js"></script>
+	
+	
+	<!-- media player buttons -->
+	<style type="text/css">
+		.player{
+  			margin: 50px 0;
+		}
+	</style>	
 
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>
-      </div>
-    </nav>
-
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Cruscotto <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Illuminazione</a></li>            
-            <li><a href="#">Prese</a></li>
-            <li><a href="#">Multimedia</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-        </div>
-        
-        
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+	 <div class="container-fluid">
+	     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	       <h1 class="page-header">Sensory Turtles Dashboard</h1>
+	     </div>
+  
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-4">
+	  			<label for="usr">File full path:</label>
+	  			<input type="text" class="form-control" id="filefullpath" value="IMG_0022.MOV" >
+			</div>
+	  		<div class="col-xs-12 col-md-8">  		  			
+					    <button type="button" id="button_fbw" class="btn" onclick='buttonRewindPress()'>
+					      <i class="fa fa-fast-backward"></i>
+					    </button>
+					    
+					    <button type="button" id="button_bw" class="btn" onclick='buttonBackPress()'>
+					      <i class="fa fa-backward"></i>
+					    </button>
+					    
+					    <button type="button" id="button_play" class="btn" onclick='buttonPlayPress()'>
+					      <i class="fa fa-play"></i>
+					    </button>
+					    
+					    <button type="button" id="button_stop" class="btn" onclick='buttonStopPress()'>
+					      <i class="fa fa-stop"></i>
+					    </button>
+					    
+					    <button type="button" id="button_fw" class="btn" onclick='buttonForwardPress()'>
+					      <i class="fa fa-forward"></i>
+					    </button>
+					    
+					    <button type="button" id="button_ffw" class="btn" onclick='buttonFastforwardPress()'>
+					      <i class="fa fa-fast-forward"></i>
+					    </button>    
+			</div>		
+		</div>
 
 		<div class="row">
-			<div class="col-xs-10 col-sm-2 ">
-				<div id="rgbControllersDiv" />											
-            </div>
-			<div class="col-xs-10 col-sm-2 ">
-				<div id="switchesDiv" />							
-            </div>
-            
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<div id="switchesDiv" />  
+			</div>
 		</div>
+	
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<div id="rgbControllersDiv" />  
+			</div>
+		</div>
+	</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8">Example: Mobile, tablet, desktop<BR/>.col-xs-12 .col-sm-6 .col-md-8</div>
+  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+  <!-- Optional: clear the XS cols if their content doesn't match in height -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+</div>
 
 
 
@@ -138,7 +154,7 @@
 				} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
 					var switchesContentString = '<input id=\"zwave-'+val['idZWave']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
 			          	+ '<b>'+val['description']+'</b>'
-		              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code>';		              	
+		              	+ '<code style="color:red">'+val['code']+'#'+val['description']+'</code>';		              	
 					
 					$('#switchesDiv').append(switchesContentString);  	
 		              	
@@ -160,6 +176,81 @@
 			}
 				
 		});		
+		
+		
+		
+		//media player buttons
+		function startMPlayer(file){
+			$.ajax({
+				  url: "/SensoryTurtlesWeb/rest/MPlayerResource/start",
+				  data: {  
+					'file': file
+				   },
+				}).done(function(data) {
+				  console.log(data);
+			}); 						
+		}
+		
+		function invokeMPlayer(cmd){
+			$.ajax({
+				  url: "/SensoryTurtlesWeb/rest/MPlayerResource/invoke",
+				  data: {  
+					'cmd': cmd
+				   },
+				}).done(function(data) {
+				  console.log(data);
+			}); 						
+		}
+
+		var state = 'stop';
+		
+		function buttonBackPress() {
+		    console.log("button back invoked.");
+		    invokeMPlayer("REWIND");
+		}
+		
+		function buttonForwardPress() {
+		    console.log("button forward invoked.");
+		    invokeMPlayer("FF");		    
+		}
+		
+		function buttonRewindPress() {
+		    console.log("button rewind invoked.");
+//		    invokeMPlayer("REWIND");		    
+		}
+		
+		function buttonFastforwardPress() {
+		    console.log("button fast forward invoked.");
+//		    invokeMPlayer("FF");		    
+		}
+		
+		function buttonPlayPress() {
+		    if(state=='stop'){
+		      state='play';
+		      var button = d3.select("#button_play").classed('btn-success', true); 
+		      button.select("i").attr('class', "fa fa-pause");
+			  startMPlayer($("#filefullpath").val());
+		    }
+		    else if(state=='play' || state=='resume'){
+		      state = 'pause';
+		      d3.select("#button_play i").attr('class', "fa fa-play");
+			  invokeMPlayer("PR");		      
+		    }
+		    else if(state=='pause'){
+		      state = 'resume';
+		      d3.select("#button_play i").attr('class', "fa fa-pause");
+			  invokeMPlayer("PR");		      
+		    }
+		    console.log("button play pressed, play was "+state);		    
+		}
+		
+		function buttonStopPress(){
+		    state = 'stop';
+		    var button = d3.select("#button_play").classed('btn-success', false);
+		    button.select("i").attr('class', "fa fa-play");
+		    console.log("button stop invoked.");    
+		    invokeMPlayer("EXIT");		    		    
+		}
 	</script>				  
 	
   </body>
