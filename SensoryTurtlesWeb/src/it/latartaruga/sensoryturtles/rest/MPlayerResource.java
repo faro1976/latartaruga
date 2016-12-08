@@ -10,16 +10,23 @@ import org.apache.log4j.Logger;
 import it.latartaruga.sensoryturtles.mplayer.IMPlayer;
 import it.latartaruga.sensoryturtles.mplayer.MPlayerCmdEnum;
 import it.latartaruga.sensoryturtles.mplayer.Omxplayer;
+import it.latartaruga.sensoryturtles.util.PropertiesHelper;
 
 @Path("/MPlayerResource")
 public class MPlayerResource {
 	private static final Logger logger = Logger.getLogger(MPlayerResource.class);
-	private final IMPlayer player = Omxplayer.getInstance(); 
+	private final IMPlayer player = Omxplayer.getInstance();
+	private String filePath;
+	
+	public MPlayerResource() {
+		filePath = PropertiesHelper.CFG_PATH + PropertiesHelper.getInstance().getP().getProperty("sensoryturtles.multimedia.dir");
+	}
 	
 	@GET
 	@Path("/start")
     @Produces(MediaType.APPLICATION_JSON)
     public void start(@QueryParam("file")String file) throws Exception{
+		file = filePath + "/" + file;
 		logger.info("cmd media player, start play " + file);
 		player.play(file);				
 	}
@@ -33,9 +40,11 @@ public class MPlayerResource {
 			if (cmd.equals(MPlayerCmdEnum.EXIT.toString())) player.exit();
 			else if (cmd.equals(MPlayerCmdEnum.REWIND.toString())) player.rewind();
 			else if (cmd.equals(MPlayerCmdEnum.FF.toString())) player.fastforward();
+			else if (cmd.equals(MPlayerCmdEnum.BACK.toString())) player.back();
+			else if (cmd.equals(MPlayerCmdEnum.FW.toString())) player.forward();			
 			else if (cmd.equals(MPlayerCmdEnum.PR.toString())) player.pauseResume();
-			else if (cmd.equals(MPlayerCmdEnum.UP.toString())) player.volUp();
-			else if (cmd.equals(MPlayerCmdEnum.DOWN.toString())) player.volDown();			
+			else if (cmd.equals(MPlayerCmdEnum.VOLUP.toString())) player.volUp();
+			else if (cmd.equals(MPlayerCmdEnum.VOLDOWN.toString())) player.volDown();			
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());

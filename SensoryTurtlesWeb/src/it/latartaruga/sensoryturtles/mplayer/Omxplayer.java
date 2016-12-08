@@ -23,9 +23,8 @@ public class Omxplayer implements IMPlayer {
 	
 	@Override
 	public void play(String file)throws IOException {
-		String fullPath = "/home/pi/tarta/media/" + file;
-		logger.info("play file " + fullPath);
-		p = Runtime.getRuntime().exec("omxplayer -o hdmi " + fullPath);
+		logger.info("play file " + file);
+		p = Runtime.getRuntime().exec("omxplayer -o both " + file);
 		logger.info("Omxplayer started");
 		is = p.getInputStream();
 		os = p.getOutputStream();
@@ -41,13 +40,25 @@ public class Omxplayer implements IMPlayer {
 
 	@Override
 	public void rewind() throws IOException {
-		os.write("<".getBytes());
+		os.write("i".getBytes());
 		os.flush();
 	}
 
 	@Override
 	public void fastforward() throws IOException{
-		os.write(">".getBytes());
+		os.write("o".getBytes());
+		os.flush();
+	}
+	
+	@Override
+	public void back() throws IOException {
+		os.write("1".getBytes());
+		os.flush();
+	}
+
+	@Override
+	public void forward() throws IOException{
+		os.write("2".getBytes());
 		os.flush();
 	}
 
@@ -61,16 +72,12 @@ public class Omxplayer implements IMPlayer {
 	public void volUp() throws IOException{
 		os.write("+".getBytes());
 		os.flush();
-
-
 	}
 
 	@Override
 	public void volDown() throws IOException{
 		os.write("-".getBytes());
 		os.flush();
-
-
 	}
 
 	public static void main(String[] args) {

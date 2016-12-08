@@ -5,7 +5,9 @@ public enum MPlayerCmdEnum {
 	EXIT,
 	REWIND,
 	FF,
+	BACK,
+	FW,
 	PR,
-	UP,
-	DOWN;
+	VOLUP,
+	VOLDOWN;
 }

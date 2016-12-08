@@ -1,3 +1,4 @@
+<%@page import="it.latartaruga.sensoryturtles.util.PropertiesHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -9,33 +10,26 @@
     
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../img/favicon.ico">
+    <link rel="icon" href="../img/favicon.ico">
 
-    <title>Dashboard for LaTartarugaOnlus</title>
+    <title>Dashboard Sensory Turtles</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../css/bootstrap.css" rel="stylesheet">
-
-    <!-- Boostrap dashboard -->
-    <link href="../../css/dashboard.css" rel="stylesheet">
-    
-    <!-- Boostrap player buttons -->
-    <link href="../../css/font-awesome.min.css" rel="stylesheet">
-	<script src="../../js/d3.min.js"></script>    
+	<!-- sensory turtles js -->
+	<script src="../js/sensoryturtles.js"></script>	
 
 	<!-- JQuery -->
-	<script src="../../js/jquery-3.1.0.min.js"></script>	
+	<script src="../js/jquery-3.1.0.min.js"></script>	
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
         
-	<!-- toogle -->
-	<link href="../../css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="../../js/bootstrap-toggle.min.js"></script>
-	
-	
+    <!-- Boostrap player buttons -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+	<script src="../js/d3.min.js"></script>    
 	<!-- media player buttons -->
 	<style type="text/css">
 		.player{
@@ -43,20 +37,37 @@
 		}
 	</style>	
 
+	<!-- toogle buttons -->
+	<link href="../css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="../js/bootstrap-toggle.min.js"></script>
+		
+	<!-- color palette table style -->		
+	<style>
+	table, th, td {
+	    border: 1px solid black;
+	}
+	</style>		
+	
   </head>
 
   <body>
-	 <div class="container-fluid">
-	     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<div class="container-fluid">
+	     <div >
 	       <h1 class="page-header">Sensory Turtles Dashboard</h1>
 	     </div>
   
-		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-4">
-	  			<label for="usr">File full path:</label>
-	  			<input type="text" class="form-control" id="filefullpath" value="IMG_0022.MOV" >
+		<div class="panel panel-primary">
+			<div class=panel-heading> <h3 class=panel-title>multimedia player</h3></div>
+			<div class=panel-body>
+			<div class="media-list-group">			
+				<a class="list-group-item active"><%=PropertiesHelper.CFG_PATH + PropertiesHelper.getInstance().getP().getProperty("sensoryturtles.multimedia.dir") %></a>			
 			</div>
-	  		<div class="col-xs-12 col-md-8">  		  			
+			
+			<div >
+	  			<label for="usr">File full path:</label>
+	  			<input type="text" class="form-control" id="filefullpath" >
+			</div>
+	  		<div >  		  			
 					    <button type="button" id="button_fbw" class="btn" onclick='buttonRewindPress()'>
 					      <i class="fa fa-fast-backward"></i>
 					    </button>
@@ -80,35 +91,37 @@
 					    <button type="button" id="button_ffw" class="btn" onclick='buttonFastforwardPress()'>
 					      <i class="fa fa-fast-forward"></i>
 					    </button>    
-			</div>		
+
+						<button type="button" class="btn btn-default btn-sm" onclick='buttonVolumeDownPress()'>
+						  <span class="glyphicon glyphicon-volume-down"></span>
+						</button>					    
+						<button type="button" class="btn btn-default btn-sm" onclick='buttonVolumeUpPress()'>
+						  <span class="glyphicon glyphicon-volume-up"></span>
+						</button>					    
+			</div>	
+			</div>				
 		</div>
 
-		<div class="row">
+		<div class="panel panel-success">
+			<div class=panel-heading> <h3 class=panel-title>Switches on/off</h3></div>
+			<div class=panel-body>
+
 			<div class="col-xs-12 col-sm-6 col-md-8">
-				<div id="switchesDiv" />  
+				<div id="switchesDiv" ></div>  
+			</div>
 			</div>
 		</div>
 	
-		<div class="row">
+		<div class="panel panel-info">
+			<div class=panel-heading> <h3 class=panel-title>RGB controllers</h3></div>
+			<div class=panel-body>
+
 			<div class="col-xs-12 col-sm-6 col-md-8">
-				<div id="rgbControllersDiv" />  
+				<div id="rgbControllersDiv" ></div>  
+			</div>
 			</div>
 		</div>
 	</div>
-
-<div class="row">
-  <div class="col-xs-12 col-sm-6 col-md-8">Example: Mobile, tablet, desktop<BR/>.col-xs-12 .col-sm-6 .col-md-8</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-</div>
-<div class="row">
-  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
-  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
-  <!-- Optional: clear the XS cols if their content doesn't match in height -->
-  <div class="clearfix visible-xs-block"></div>
-  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
-</div>
-
-
 
 	<script>
 
@@ -132,10 +145,15 @@
 					var iframe = document.createElement('iframe');
 			        var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];					
 					iframe.setAttribute("src", rgbPageUrl);
-					iframe.setAttribute("width", 500);
-					iframe.setAttribute("height", 230);
+					iframe.setAttribute("width", 350);
+					iframe.setAttribute("height", 310);
 					iframe.setAttribute("border", 0);					
 					document.getElementById("rgbControllersDiv").appendChild(iframe);
+					
+					var tableDiv = document.createElement('div');
+					tableDiv.innerHTML='<table style="width:20%"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idZWave']+',&quot;#FFFFFF&quot;)">White</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idZWave']+',&quot;#000000&quot;)">Black</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idZWave']+',&quot;#009F6B&quot;)">Green</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idZWave']+',&quot;#C40233&quot;)">Red</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idZWave']+',&quot;#FFD300&quot;)">Yellow</td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idZWave']+',&quot;#0087BD&quot;)">Blue</td></tr></table>';
+					document.getElementById("rgbControllersDiv").appendChild(tableDiv);
+					
 					
 /*					$('#zwave-'+val['idZWave']).on('slidermove', function() {
 						console.log('Color of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
@@ -152,20 +170,21 @@
 						});						
 					});*/
 				} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
-					var switchesContentString = '<input id=\"zwave-'+val['idZWave']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
-			          	+ '<b>'+val['description']+'</b>'
-		              	+ '<code style="color:red">'+val['code']+'#'+val['description']+'</code>';		              	
+					var switchesContentString = '<input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
+			          	+ '<p><b>'+val['description']+'</b>'
+		              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code></p>';
 					
 					$('#switchesDiv').append(switchesContentString);  	
 		              	
-					$('#zwave-'+val['idZWave']).change(function() {
+					$('#'+val['code']).change(function() {
 						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
 						
 						$.ajax({
 							  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
 							  data: { 
-								'devId': $(this).prop("id"), 
-								'cmd': $(this).prop('checked')
+								'devId': $(this).prop("id"),
+								'type': "SWITCH",
+								'cmd': $(this).prop('checked') ? "on" : "off"
 							   },
 							}).done(function(data) {
 							  console.log(data);
@@ -174,9 +193,24 @@
 					});						
 				}
 			}
-				
+            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
+            $("[data-toggle='toggle']").bootstrapToggle();		              					
 		});		
 		
+		//load multimedia file path
+		var jsonData = $.ajax({
+			url: '/SensoryTurtlesWeb/rest/MediaFileResource/readList',
+			    dataType: 'json',
+			}).done(function (data) {
+			for (var idx in data) {
+				console.log(data[idx]);
+				$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(data[idx])+"') class=\"list-group-item \">"+data[idx]+"</a>");
+				//<a href=javascript:setFileName('aa') class="list-group-item  ">CP 6 Ottobre.pdf</a>
+				if (idx==0) {
+					$("#filefullpath").val(data[idx]);
+				}
+			}
+		});			
 		
 		
 		//media player buttons
@@ -201,27 +235,33 @@
 				  console.log(data);
 			}); 						
 		}
+		
+		function setFileName(fileName){
+			$("#filefullpath").val(fileName);
+		}
 
+		
+		//media player script
 		var state = 'stop';
 		
 		function buttonBackPress() {
 		    console.log("button back invoked.");
-		    invokeMPlayer("REWIND");
+		    invokeMPlayer("BACK");
 		}
 		
 		function buttonForwardPress() {
 		    console.log("button forward invoked.");
-		    invokeMPlayer("FF");		    
+		    invokeMPlayer("FW");		    
 		}
 		
 		function buttonRewindPress() {
 		    console.log("button rewind invoked.");
-//		    invokeMPlayer("REWIND");		    
+		    invokeMPlayer("REWIND");		    
 		}
 		
 		function buttonFastforwardPress() {
 		    console.log("button fast forward invoked.");
-//		    invokeMPlayer("FF");		    
+		    invokeMPlayer("FF");		    
 		}
 		
 		function buttonPlayPress() {
@@ -251,7 +291,38 @@
 		    console.log("button stop invoked.");    
 		    invokeMPlayer("EXIT");		    		    
 		}
-	</script>				  
+		
+		function buttonVolueDownPress() {
+		    console.log("button volume down invoked.");
+		    invokeMPlayer("VOLDOWN");		    
+		}
+		function buttonVolueUpPress() {
+		    console.log("button volume up invoked.");
+		    invokeMPlayer("VOLUP");		    
+		}
+		
+		
+		//set hue color
+		function clickColor(devId, hexColor){
+			var rgbColor =hexToRGB(hexColor, false); 
+			console.log(rgbColor);		
+			$.ajax({
+				  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
+				  data: { 
+					'devId': devId, 
+					'type': "RGB",
+					'cmd': rgbColor
+				   },
+				}).done(function(data) {
+				  console.log(data);
+			});											
+		}		
+	</script>
+
+
+
+
+
 	
   </body>
 </html>

@@ -5,6 +5,8 @@ import java.io.IOException;
 public interface IMPlayer {
 	public void play(String file) throws IOException;
 	public void exit() throws IOException;
+	public void back()throws IOException;
+	public void forward()throws IOException;	
 	public void rewind()throws IOException;
 	public void fastforward()throws IOException;
 	public void pauseResume()throws IOException;

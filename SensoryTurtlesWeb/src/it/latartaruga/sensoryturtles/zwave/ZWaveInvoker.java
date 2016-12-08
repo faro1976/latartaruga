@@ -7,14 +7,27 @@ import java.util.Base64;
 
 import org.apache.log4j.Logger;
 
+import it.latartaruga.sensoryturtles.util.PropertiesHelper;
+
 
 
 public class ZWaveInvoker {
-	private String host = "http://192.168.0.2:8083/ZWaveAPI";
-	private String cmdSwitch ="/Run/devices[2].instances[0].Basic.";
-	private String cmdRGBCtrl ="";
-	private String username = "admin";
-	private String password = "faro1976";
+	private String host;
+	//private String cmdSwitch ="ZWaveAPI/Run/devices[%s].instances[0].Basic.Set(%s)";
+	private String cmdSwitch ="/ZAutomation/api/v1/devices/%s/command/%s";
+//	private String cmdRGBCtrl ="/Run/devices[3].instances[0].commandClasses[51].";
+	private String cmdRGBCtrl ="/ZAutomation/api/v1/devices/%s/command/exact?%s";
+	//http://192.168.0.2:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_3-0-51-rgb/command/exact?red=255&green=0&blue=0
+	//http://192.168.2.4:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_2-0-37/command/off
+	//http://192.168.0.2:8083/ZWave.zway/Run/devices[3].instances[0].commandClasses[51].Set(3,123)
+//	Color Capability
+//	 (0) Soft White
+//	 (2) Red
+//	 (3) Green
+//	 (4) Blue	
+	private String username;
+	private String password;
+	private final PropertiesHelper ph = PropertiesHelper.getInstance();
 	private final Logger logger = Logger.getLogger(ZWaveInvoker.class);
 		
 	//http://YOURIP:8083/ZWaveAPI/Data/*	intero albero
@@ -33,9 +46,17 @@ public class ZWaveInvoker {
 	///ZWaveAPI/Run/devices[2].instances[0].Basic.Set(255) 		ON
 	///ZWaveAPI/Run/devices[2].instances[0].Basic.Set(0) 		OFF
 
-	public String invokeCmd (String devId, ZWaveCmd cmd) throws Exception{
-		URL url = new URL(String.format("%s/Run/devices[%s].instances[0].%s", host, devId, cmd.getCmd()));
-		logger.info("execute ZWave command [" + url.toString() + "]");
+	public ZWaveInvoker() {		
+		username = ph.getP().getProperty("sensoryturtles.zwave.uid");
+		password = ph.getP().getProperty("sensoryturtles.zwave.pwd");
+		host = ph.getP().getProperty("sensoryturtles.zwave.url");
+	}
+	
+	public String invokeCmd (String devId, String type, String cmd) throws Exception{
+		String urlStr = host + (type.equals(ZWaveCmd.RGB.toString()) ? cmdRGBCtrl : cmdSwitch);
+		urlStr = String.format(urlStr, devId, cmd);
+		URL url = new URL(urlStr);
+		logger.info("execute ZWave command by URL [" + url.toString() + "]");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		String authString = username + ":" + password;
 		String authStringEnc = new String(Base64.getEncoder().encode(authString.getBytes()));
@@ -66,17 +87,8 @@ public class ZWaveInvoker {
 
 	
 	public enum ZWaveCmd{
-		SWITCH_ON("Basic.Set(255)"),
-		SWITCH_OFF("Basic.Set(0)"),
-		SET_RGB("");
-		
-		private String cmd;
-		public String getCmd() {
-			return cmd;
-		}
-		private ZWaveCmd(String cmd) {
-			this.cmd=cmd;
-		}
+		SWITCH,
+		RGB;
 	}
 	
 	public class ZWaveException extends Exception{

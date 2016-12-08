@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -15,7 +14,6 @@ import it.latartaruga.sensoryturtles.vo.ControllerRGBVO;
 import it.latartaruga.sensoryturtles.vo.RelayVO;
 import it.latartaruga.sensoryturtles.vo.ZWaveDeviceVO;
 import it.latartaruga.sensoryturtles.zwave.ZWaveInvoker;
-import it.latartaruga.sensoryturtles.zwave.ZWaveInvoker.ZWaveCmd;
 
 @Path("/ZWaveDeviceResource")
 public class ZWaveDeviceResource {
@@ -26,12 +24,13 @@ public class ZWaveDeviceResource {
 	@Path("/readList")
     @Produces(MediaType.APPLICATION_JSON)
     public java.util.List<ZWaveDeviceVO> readList() {
-		List<ZWaveDeviceVO> deviceList = new ArrayList<ZWaveDeviceVO>();
-		deviceList.add(new ControllerRGBVO("cod1","ctrlrgb1","1"));
-		deviceList.add(new ControllerRGBVO("cod2","ctrlrgb2","2"));
-		deviceList.add(new RelayVO("cod3","relay1","3"));
-		deviceList.add(new RelayVO("cod4","relay2","4"));
-        return deviceList;
+//		List<ZWaveDeviceVO> deviceList = new ArrayList<ZWaveDeviceVO>();
+//		deviceList.add(new ControllerRGBVO("ZWayVDev_zway_3-0-51-rgb","led lato muro","3"));
+//		deviceList.add(new ControllerRGBVO("cod4","descr ctrlrgb2","4"));
+//		deviceList.add(new RelayVO("cod1","relay1","1"));
+//		deviceList.add(new RelayVO("ZWayVDev_zway_2-0-37","sparabolle","2"));
+//        return deviceList;
+		
     }
 	
 	@GET
@@ -45,10 +44,10 @@ public class ZWaveDeviceResource {
 	@GET
 	@Path("/invoke")
     @Produces(MediaType.APPLICATION_JSON)
-    public String invoke(@QueryParam("devId")String devId, @QueryParam("cmd")String cmd) throws Exception{
-		System.out.println("devId:"+devId+";cmd:"+cmd+";");
-		//return zwi.invokeCmd(devId, ZWaveCmd.valueOf(cmd));
-		return "okrob";
+    public String invoke(@QueryParam("devId")String devId, @QueryParam("type")String type, @QueryParam("cmd")String cmd) throws Exception{
+		logger.info("devId:"+devId+";type:"+type+";cmd:"+cmd+";");
+		return zwi.invokeCmd(devId, type, cmd);
+//		return "okrob";
     }
 	
 }
