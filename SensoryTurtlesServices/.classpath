@@ -15,6 +15,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/SensoryTurtlesCore"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SensoryTurtlesEJB"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

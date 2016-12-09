@@ -45,6 +45,11 @@ public class JpaPager<E> implements IListPager<E>  {
 		this.offset = offset;
 		this.expression = expression;
 	}
+	
+	JpaPager(Function<Root<E>, Expression<Boolean>> expression) {
+		this.expression = expression;
+	}
+	
 
 	@Override
 	public List<E> getResult() {

@@ -7,5 +7,6 @@ import it.framework.core.dao.interf.IDAOFactory;
 public interface IDAOFactoryTurtles extends IDAOFactory {
 	
 	IRoomDAO getRoomDAO(EntityManager em);
+	IDeviceRelayDAO getDeviceReleayDAO(EntityManager em);
 	
 }

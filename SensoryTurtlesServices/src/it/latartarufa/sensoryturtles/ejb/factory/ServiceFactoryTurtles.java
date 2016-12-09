@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.sun.xml.internal.ws.message.RelatesToHeader;
+
 import it.framework.core.error.impl.ApplicationErrorService;
 import it.framework.core.error.interf.IErrorFormatterService;
 import it.framework.core.executor.impl.BaseExecutor;
@@ -18,7 +20,9 @@ import it.framework.core.executor.interf.IExecutionId;
 import it.latartaruga.sensoryturtles.properties.TurtlesProperties;
 import it.latartaruga.sensoryturtles.repository.impl.RepositoryFactoryTurtles;
 import it.latartaruga.sensoryturtles.repository.interf.IRepositoryFactoryTurtles;
+import it.latartaruga.sensoryturtles.service.impl.RelayService;
 import it.latartaruga.sensoryturtles.service.impl.RoomService;
+import it.latartaruga.sensoryturtles.service.interf.IRelayService;
 import it.latartaruga.sensoryturtles.service.interf.IRoomService;
 
 @Dependent
@@ -56,8 +60,11 @@ public class ServiceFactoryTurtles {
 	}
 
 	public IRoomService getRoomService() {
-	
 		return new RoomService(repositoryFactory, executor);
+	}
+	
+	public IRelayService getRelayService() {
+		return new RelayService(repositoryFactory, executor);
 	}
 
 	public EntityManager getOnlineEm() {

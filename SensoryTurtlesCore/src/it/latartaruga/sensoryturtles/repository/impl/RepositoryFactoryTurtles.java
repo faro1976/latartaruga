@@ -1,6 +1,5 @@
 package it.latartaruga.sensoryturtles.repository.impl;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import it.latartaruga.sensoryturtles.dao.impl.jpa.DAOFactoryTurtlesJPA;
@@ -20,6 +19,9 @@ public class RepositoryFactoryTurtles implements IRepositoryFactoryTurtles {
 		return new  RoomRepository(new DAOFactoryTurtlesJPA(), em);
 	}
 
-	
+	@Override
+	public RelayRepository getRelayRepository() {
+		return new  RelayRepository(new DAOFactoryTurtlesJPA(), em);
+	}
 
 }

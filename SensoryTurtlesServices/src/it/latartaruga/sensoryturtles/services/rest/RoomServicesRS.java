@@ -3,61 +3,81 @@ package it.latartaruga.sensoryturtles.services.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import it.framework.client.service.impl.PagedRequest;
 import it.framework.client.service.impl.RequestContext;
+import it.framework.client.service.impl.RequestParameter;
 import it.framework.client.service.impl.RestFault;
 import it.framework.client.service.impl.ServiceException;
 import it.framework.client.service.inferf.IOffset;
 import it.framework.client.service.inferf.IPagedRequest;
 import it.framework.client.service.inferf.IPagedResponse;
 import it.framework.client.service.inferf.IRequestContext;
+import it.framework.client.service.inferf.IRequestParameter;
+import it.framework.client.service.inferf.IResponse;
 import it.framework.core.exposer.impl.RestExposer;
 import it.framework.core.service.impl.Offset;
-import it.latartarufa.sensoryturtles.ejb.RoomServiceBean;
-import it.latartarufa.sensoryturtles.ejb.interf.IRoomServiceEJBLocal;
+import it.latartarufa.sensoryturtles.ejb.factory.ServiceFactoryTurtles;
 import it.latartaruga.sensoryturtles.model.ControllerRGB;
+import it.latartaruga.sensoryturtles.model.DeviceKey;
 import it.latartaruga.sensoryturtles.model.Multimedia;
 import it.latartaruga.sensoryturtles.model.Relay;
 import it.latartaruga.sensoryturtles.model.Room;
+import it.latartaruga.sensoryturtles.service.interf.IRelayService;
+import it.latartaruga.sensoryturtles.service.interf.IRoomService;
 
 public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 	
 	
-	@EJB
-	private IRoomServiceEJBLocal roomService;
+	//@EJB
+	//private IRoomServiceEJBLocal roomService;
+	
+	@Inject
+	private ServiceFactoryTurtles factory;
+	
+	private IRoomService getDelegateRoomService() {
+		return factory.getRoomService();
+	}
+	
+	private IRelayService getDelegateRelayService() {
+		return factory.getRelayService();
+	}
 
 	@Override
 	public IPagedResponse<List<? extends Room>> getRooms() throws RestFault {
 		try {
-			IRequestContext requestContext = new RequestContext("JUNIT", null, null, "1", null);
+			IRequestContext requestContext = new RequestContext("WEB", null, null, "1", null);
 			IOffset offset = new Offset(0, Integer.MAX_VALUE);
 			IPagedRequest<String> pagedRequest = new PagedRequest(requestContext,offset,null,null);
-			return roomService.ricercaRooms(pagedRequest);
+			return getDelegateRoomService().ricercaRooms(pagedRequest);
 		} catch (ServiceException  e){
 			throw createRestExeption(e);
 		}
 	}
 
 	@Override
-	public Room getRoom(String idRoom) {
-		System.out.println("ID_ROOM:[" +idRoom + "]");
-		Room room = new Room(1,"01","Prova 1");
-		return room;
+	public IResponse<Room> getRoom(String idRoom) {
+		try {
+			IRequestContext requestContext = new RequestContext("WEB", null, null, "1", null);
+			IRequestParameter<Integer> requestParameter = new RequestParameter<Integer>(requestContext, Integer.valueOf(idRoom));
+			return getDelegateRoomService().ricercaRoom(requestParameter);
+		} catch (ServiceException  e){
+			throw createRestExeption(e);
+		}
 	}
 
 
 	@Override
-	public List<Relay> getRelaysByRoom(String idRoom) {
-		System.out.println("ID_ROOM:[" +idRoom + "]");
-		
-		List<Relay> devices = new ArrayList<>();
-		Relay device = new Relay(1,"01","device 1",11);
-		devices.add(device);
-
-		return devices;
+	public IPagedResponse<List<? extends Relay>> getRelaysByRoom(String idRoom) {
+		try {
+			IRequestContext requestContext = new RequestContext("WEB", null, null, "1", null);
+			IOffset offset = new Offset(0, Integer.MAX_VALUE);
+			IPagedRequest<Integer> pagedRequest = new PagedRequest(requestContext,offset,null,Integer.valueOf(idRoom));
+			return getDelegateRelayService().ricercaRelaysByRoom(pagedRequest);
+		} catch (ServiceException  e){
+			throw createRestExeption(e);
+		}
 	}
 
 	@Override
@@ -65,7 +85,8 @@ public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 		System.out.println("ID_ROOM:[" +idRoom + "]");
 		
 		List<ControllerRGB> devices = new ArrayList<>();
-		ControllerRGB device =  new ControllerRGB(2,"02","device 2",22);
+		DeviceKey key = new DeviceKey(Integer.valueOf(idRoom), 2);
+		ControllerRGB device =  new ControllerRGB(key,"02","device 2",22);
 		devices.add(device);
 		
 		return devices;
@@ -76,7 +97,8 @@ public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 		System.out.println("ID_ROOM:[" +idRoom + "]");
 		
 		List<Multimedia> devices = new ArrayList<>();
-		Multimedia device =  new Multimedia(3,"03","device 3");
+		DeviceKey key = new DeviceKey(Integer.valueOf(idRoom), 3);
+		Multimedia device =  new Multimedia(key,"03","device 3");
 		devices.add(device);
 		
 		return devices;

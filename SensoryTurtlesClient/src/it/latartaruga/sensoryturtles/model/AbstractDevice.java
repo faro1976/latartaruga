@@ -2,24 +2,24 @@ package it.latartaruga.sensoryturtles.model;
 
 public abstract class AbstractDevice {
 	
-	private int idDevice;
+	private DeviceKey deviceKey;
 	private String code;
 	private String description;
 	
 		
-	public AbstractDevice(int idDevice, String code, String description) {
+	public AbstractDevice(DeviceKey deviceKey, String code, String description) {
 		super();
-		this.idDevice = idDevice;
+		this.deviceKey = deviceKey;
 		this.code = code;
 		this.description = description;
 	}
 	
-	
-	public int getIdDevice() {
-		return idDevice;
+
+	public DeviceKey getDeviceKey() {
+		return deviceKey;
 	}
-	public void setIdDevice(int idDevice) {
-		this.idDevice = idDevice;
+	public void setDeviceKey(DeviceKey deviceKey) {
+		this.deviceKey = deviceKey;
 	}
 	public String getCode() {
 		return code;
