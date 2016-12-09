@@ -3,9 +3,6 @@
   <display-name>SensoryTurtlesEAR</display-name>
   <initialize-in-order>true</initialize-in-order>
   <module>
-    <ejb>SensoryTurtlesEJB.jar</ejb>
-  </module>
-  <module>
     <web>
       <web-uri>SensoryTurtlesServices.war</web-uri>
       <context-root>SensoryTurtlesServices</context-root>

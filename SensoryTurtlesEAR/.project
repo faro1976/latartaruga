@@ -3,8 +3,6 @@
 	<name>SensoryTurtlesEAR</name>
 	<comment></comment>
 	<projects>
-		<project>SensoryTurtlesEJB</project>
-		<project>SensoryTurtlesEJBClient</project>
 		<project>SensoryTurtlesServices</project>
 		<project>SensoryTurtlesClient</project>
 		<project>SensoryTurtlesJPA</project>
