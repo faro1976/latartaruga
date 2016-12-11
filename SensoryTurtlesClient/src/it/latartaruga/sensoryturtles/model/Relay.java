@@ -2,10 +2,9 @@ package it.latartaruga.sensoryturtles.model;
 
 public class Relay extends AbstractZWaveDevice {
 
-	public Relay(int idDevice, String code, String description, int idRaspBerry) {
-		super(idDevice, code, description, idRaspBerry);
+	public Relay(DeviceKey deviceKey, String code, String description, int idRaspBerry) {
+		super(deviceKey, code, description, idRaspBerry);
 	}
 	
-
 
 }

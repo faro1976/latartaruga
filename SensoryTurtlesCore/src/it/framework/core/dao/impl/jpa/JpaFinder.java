@@ -30,6 +30,7 @@ public class JpaFinder<E> {
 	protected EntityManager em;
 	protected Class<E> entityClass;
 
+	
 	public JpaFinder(EntityManager em, Class<E> entityClass) {
 		this.em = em;
 		this.entityClass = entityClass;
@@ -80,6 +81,11 @@ public class JpaFinder<E> {
 	protected IListPager<E> getPager(IOffset offset,String jpqlQuery) {
 		return new JpaPager<E>(em,entityClass,offset,jpqlQuery);
 	}
+	
+	protected IListPager<E> getPager(Function<Root<E>, Expression<Boolean>> expressions) {
+		return new JpaPager(expressions);
+	}
+
 
 	protected IListPager<E> getPager(IOffset offset,Function<Root<E>, Expression<Boolean>> expressions) {
 		return new JpaPager<E>(em,entityClass,offset,expressions);
@@ -96,7 +102,6 @@ public class JpaFinder<E> {
 	}
 
 	
-
 	public IListPager<E> findByPropertiesPaged(IOffset offset,
 											   List<? extends IPropertyValue<?>> criteria,
 											   List<? extends IProperty> projection) {

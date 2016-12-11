@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 
 import it.framework.client.service.impl.RestFault;
 import it.framework.client.service.inferf.IPagedResponse;
+import it.framework.client.service.inferf.IResponse;
 import it.latartaruga.sensoryturtles.model.ControllerRGB;
 import it.latartaruga.sensoryturtles.model.Multimedia;
 import it.latartaruga.sensoryturtles.model.Relay;
@@ -29,11 +30,11 @@ public interface IRoomServiceRS {
 
 	 @GET
 	 @Path("Room/{idRoom}")
-	 public Room getRoom(@PathParam("idRoom") String idRoom);
+	 public IResponse<Room> getRoom(@PathParam("idRoom") String idRoom);
 	 
 	 @GET
 	 @Path("Room/{idRoom}/Relays")
-	 public List<Relay> getRelaysByRoom(@PathParam("idRoom") String idRoom);
+	 public IPagedResponse<List<? extends Relay>> getRelaysByRoom(@PathParam("idRoom") String idRoom);
 	 
 	 @GET
 	 @Path("Room/{idRoom}/ControllersRGB")

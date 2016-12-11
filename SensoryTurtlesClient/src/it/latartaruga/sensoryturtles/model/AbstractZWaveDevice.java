@@ -5,8 +5,8 @@ public abstract class AbstractZWaveDevice extends AbstractDevice {
 	private int idRaspBerry;
 
 		
-	public AbstractZWaveDevice(int idDevice, String code, String description, int idRaspBerry) {
-		super(idDevice, code, description);
+	public AbstractZWaveDevice(DeviceKey deviceKey, String code, String description, int idRaspBerry) {
+		super(deviceKey, code, description);
 		this.idRaspBerry = idRaspBerry;
 	}
 

@@ -2,8 +2,8 @@ package it.latartaruga.sensoryturtles.model;
 
 public class ControllerRGB extends AbstractZWaveDevice {
 
-	public ControllerRGB(int idDevice, String code, String description, int idRaspBerry) {
-		super(idDevice, code, description, idRaspBerry);
+	public ControllerRGB(DeviceKey deviceKey, String code, String description, int idRaspBerry) {
+		super(deviceKey, code, description, idRaspBerry);
 	}
 
 }
