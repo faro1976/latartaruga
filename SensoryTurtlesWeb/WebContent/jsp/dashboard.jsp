@@ -18,13 +18,14 @@
 	<script src="../js/sensoryturtles.js"></script>	
 
 	<!-- JQuery -->
-	<script src="../js/jquery-3.1.0.min.js"></script>	
+	<script src="../js/jquery-3.1.0.min.js"></script>
+	<!-- JQuery UI -->
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>	
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
 
 	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
         
     <!-- Boostrap player buttons -->
