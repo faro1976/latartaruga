@@ -25,9 +25,9 @@ public class ZWaveDeviceResource {
     @Produces(MediaType.APPLICATION_JSON)
     public java.util.List<ZWaveDeviceVO> readList() {
 		List<ZWaveDeviceVO> deviceList = new ArrayList<ZWaveDeviceVO>();
-		deviceList.add(new ControllerRGBVO("ZWayVDev_zway_3-0-51-rgb","led lato muro","3"));
-		deviceList.add(new ControllerRGBVO("cod4","descr ctrlrgb2","4"));
-		deviceList.add(new RelayVO("cod1","relay1","1"));
+		deviceList.add(new ControllerRGBVO("ZWayVDev_zway_3-0-51-rgb","led_piscina_dx","3"));
+		deviceList.add(new ControllerRGBVO("cod4","led_piscina_sx","4"));
+		deviceList.add(new RelayVO("cod1","luce_stroboscopica","1"));
 		deviceList.add(new RelayVO("ZWayVDev_zway_2-0-37","sparabolle","2"));
         return deviceList;
 		

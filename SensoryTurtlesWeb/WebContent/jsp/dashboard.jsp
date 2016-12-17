@@ -42,20 +42,12 @@
 	<link href="../css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="../js/bootstrap-toggle.min.js"></script>
 		
-	<!-- color palette table style -->		
-	<style>
-	table, th, td {
-	    border: 1px solid black;
-	}
-	</style>		
-
 
   </head>
 
   <body>
-  	<jsp:include page="header.jsp"></jsp:include>
 	<div class="container-fluid">
-	
+	  	<jsp:include page="header.jsp"></jsp:include>
 		<div class="bsalert"></div>
 	  
 		<div class="panel panel-primary">
@@ -108,10 +100,11 @@
 			<div class=panel-heading> <h3 class=panel-title>Switches on/off</h3></div>
 			<div class=panel-body>
 
-			<div class="col-xs-12 col-sm-6 col-md-8">
-				<div id="switchesDiv" ></div>  
+			<div class="col-xs-12 col-sm-6 col-md-8" >
+				<!-- <div id="switchesDiv" ></div> -->  
+				<table id="switchesTable" class="table switchesTable"></table>
 			</div>
-			</div>
+			 
 		</div>
 	
 		<div class="panel panel-info">
@@ -119,40 +112,54 @@
 			<div class=panel-body>
 
 			<div class="col-xs-12 col-sm-6 col-md-8">
-				<div id="rgbControllersDiv" ></div>  
+				<!-- <div id="rgbControllersDiv" ></div>  -->  
+				<table id="rgbCircleTable" class="table rgbCircleTable"></table>
 			</div>
+			
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<!-- <div id="rgbControllersDiv" ></div>  -->  
+				<table id="rgbPaletteTable" class="table rgbPaletteTable"></table>				
+			</div>
+			
 			</div>
 		</div>
 	</div>
-
-	<script>
-
+	</div>
+	<script>		
 		var jsonData = $.ajax({
 			url: '/SensoryTurtlesWeb/rest/ZWaveDeviceResource/readList',
 			dataType: 'json',
-			success: function (data) {			
+			success: function (data) {	
+				var rgbPaletteRow = $("<tr>");
+				var rgbCircleRow = $("<tr>");
+				var switchesRow = $("<tr>");
 				for (var key in data) {
 					var val = data[key];
-					console.log(val['description']);
-					
+					console.log(val['description']);					
 			              	
 					if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
+						var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];
 	/*					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
 					          	+ '<h4>'+val['description']+'</h4>'
 				              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>'
 				              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'
 						$('#rgbControllersDiv').append(rgbContentString);*/
-						var iframe = document.createElement('iframe');
-				        var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];					
+				              	
+/*						var iframe = document.createElement('iframe');				        					
 						iframe.setAttribute("src", rgbPageUrl);
 						iframe.setAttribute("width", 350);
 						iframe.setAttribute("height", 310);
-						iframe.setAttribute("border", 0);					
-						document.getElementById("rgbControllersDiv").appendChild(iframe);
+						iframe.setAttribute("border", 0);*/
+						var iframe = "<iframe src="+rgbPageUrl+"' width=350 height=310 border=0 ></iframe>";   
+						//document.getElementById("rgbControllersDiv").appendChild(iframe);
+						var circleCols ="<td>"+iframe+"</td>";						
+						rgbCircleRow.append(circleCols);
 						
 						var tableDiv = document.createElement('div');
-						tableDiv.innerHTML='<table style="width:20%"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idZWave']+',&quot;#FFFFFF&quot;)">White</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idZWave']+',&quot;#000000&quot;)">Black</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idZWave']+',&quot;#009F6B&quot;)">Green</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idZWave']+',&quot;#C40233&quot;)">Red</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idZWave']+',&quot;#FFD300&quot;)">Yellow</td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idZWave']+',&quot;#0087BD&quot;)">Blue</td></tr></table>';
-						document.getElementById("rgbControllersDiv").appendChild(tableDiv);
+						tableDiv.innerHTML='<table border="2" style="width:80%;height=40%;"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idZWave']+',&quot;#FFFFFF&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idZWave']+',&quot;#000000&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idZWave']+',&quot;#009F6B&quot;)">&nbsp;</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idZWave']+',&quot;#C40233&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idZWave']+',&quot;#FFD300&quot;)">&nbsp<bsp;/td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idZWave']+',&quot;#0087BD&quot;)">&nbsp;</td></tr></table>';
+//						document.getElementById("rgbControllersDiv").appendChild(tableDiv);						
+						var paletteCols ="<td>"+tableDiv.innerHTML+"</td>";
+			            rgbPaletteRow.append(paletteCols);
 						
 						
 	/*					$('#zwave-'+val['idZWave']).on('slidermove', function() {
@@ -170,11 +177,13 @@
 							});						
 						});*/
 					} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
-						var switchesContentString = '<input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
+						var switchesContentString = '<div style:"display:inline-block;"><input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
 				          	+ '<p><b>'+val['description']+'</b>'
-			              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code></p>';
+			              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code></p></div>';
 						
-						$('#switchesDiv').append(switchesContentString);  	
+			            //$('#switchesDiv').append(switchesContentString);			            			            
+			            var cols ="<td>"+switchesContentString+"</td>";
+			            switchesRow.append(cols);
 			              	
 						$('#'+val['code']).change(function() {
 							console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
@@ -196,9 +205,12 @@
 						});
 					};
 		            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
-		            $("[data-toggle='toggle']").bootstrapToggle();
+		            $("[data-toggle='toggle']").bootstrapToggle();		            		            		            
 		            showSuccess("lettura dispositvi ZWave effettuata con successo");
 				}
+	            $("table.rgbPaletteTable").append(rgbPaletteRow);
+	            $("table.rgbCircleTable").append(rgbCircleRow);	            
+	            $("table.switchesTable").append(switchesRow);
 		    },
 		    error: function (request, error) {
 		    	showError("lettura dispositvi ZWave non effettuata: " + error);
@@ -219,7 +231,7 @@
 						$("#filefullpath").val(data[idx]);
 					}
 				}
-				showSuccess("lettura di " + data.lentgh + " file multimediali effettuata con successo");
+				showSuccess("lettura dei file multimediali effettuata con successo");
 		    },
 		    error: function (request, error) {
 		    	showError("lettura file multimediali non effettuata: " + error);
