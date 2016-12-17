@@ -48,15 +48,16 @@
 	    border: 1px solid black;
 	}
 	</style>		
-	
+
+
   </head>
 
   <body>
+  	<jsp:include page="header.jsp"></jsp:include>
 	<div class="container-fluid">
-	     <div >
-	       <h1 class="page-header">Sensory Turtles Dashboard</h1>
-	     </div>
-  
+	
+		<div class="bsalert"></div>
+	  
 		<div class="panel panel-primary">
 			<div class=panel-heading> <h3 class=panel-title>multimedia player</h3></div>
 			<div class=panel-body>
@@ -128,113 +129,139 @@
 
 		var jsonData = $.ajax({
 			url: '/SensoryTurtlesWeb/rest/ZWaveDeviceResource/readList',
-			    dataType: 'json',
-			}).done(function (data) {
-				
-			
-			for (var key in data) {
-				var val = data[key];
-				console.log(val['description']);
-				
-		              	
-				if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
-/*					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
-				          	+ '<h4>'+val['description']+'</h4>'
-			              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>'
-			              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'
-					$('#rgbControllersDiv').append(rgbContentString);*/
-					var iframe = document.createElement('iframe');
-			        var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];					
-					iframe.setAttribute("src", rgbPageUrl);
-					iframe.setAttribute("width", 350);
-					iframe.setAttribute("height", 310);
-					iframe.setAttribute("border", 0);					
-					document.getElementById("rgbControllersDiv").appendChild(iframe);
+			dataType: 'json',
+			success: function (data) {			
+				for (var key in data) {
+					var val = data[key];
+					console.log(val['description']);
 					
-					var tableDiv = document.createElement('div');
-					tableDiv.innerHTML='<table style="width:20%"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idZWave']+',&quot;#FFFFFF&quot;)">White</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idZWave']+',&quot;#000000&quot;)">Black</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idZWave']+',&quot;#009F6B&quot;)">Green</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idZWave']+',&quot;#C40233&quot;)">Red</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idZWave']+',&quot;#FFD300&quot;)">Yellow</td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idZWave']+',&quot;#0087BD&quot;)">Blue</td></tr></table>';
-					document.getElementById("rgbControllersDiv").appendChild(tableDiv);
-					
-					
-/*					$('#zwave-'+val['idZWave']).on('slidermove', function() {
-						console.log('Color of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
-						$($(this).prop("id")+'-colordiv').css('background-color','red');
+			              	
+					if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
+	/*					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
+					          	+ '<h4>'+val['description']+'</h4>'
+				              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>'
+				              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'
+						$('#rgbControllersDiv').append(rgbContentString);*/
+						var iframe = document.createElement('iframe');
+				        var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];					
+						iframe.setAttribute("src", rgbPageUrl);
+						iframe.setAttribute("width", 350);
+						iframe.setAttribute("height", 310);
+						iframe.setAttribute("border", 0);					
+						document.getElementById("rgbControllersDiv").appendChild(iframe);
 						
-						$.ajax({
-							  url: "../../rest/ZWaveDeviceResource/invoke",
-							  data: { 
-								'devId': $(this).prop("id"), 
-								'cmd': $(this).prop('value')
-							   },
-							}).done(function(data) {
-							  console.log(data);
-						});						
-					});*/
-				} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
-					var switchesContentString = '<input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
-			          	+ '<p><b>'+val['description']+'</b>'
-		              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code></p>';
-					
-					$('#switchesDiv').append(switchesContentString);  	
-		              	
-					$('#'+val['code']).change(function() {
-						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
+						var tableDiv = document.createElement('div');
+						tableDiv.innerHTML='<table style="width:20%"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idZWave']+',&quot;#FFFFFF&quot;)">White</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idZWave']+',&quot;#000000&quot;)">Black</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idZWave']+',&quot;#009F6B&quot;)">Green</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idZWave']+',&quot;#C40233&quot;)">Red</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idZWave']+',&quot;#FFD300&quot;)">Yellow</td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idZWave']+',&quot;#0087BD&quot;)">Blue</td></tr></table>';
+						document.getElementById("rgbControllersDiv").appendChild(tableDiv);
 						
-						$.ajax({
-							  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
-							  data: { 
-								'devId': $(this).prop("id"),
-								'type': "SWITCH",
-								'cmd': $(this).prop('checked') ? "on" : "off"
-							   },
-							}).done(function(data) {
-							  console.log(data);
-						}); 					
 						
-					});						
+	/*					$('#zwave-'+val['idZWave']).on('slidermove', function() {
+							console.log('Color of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
+							$($(this).prop("id")+'-colordiv').css('background-color','red');
+							
+							$.ajax({
+								  url: "../../rest/ZWaveDeviceResource/invoke",
+								  data: { 
+									'devId': $(this).prop("id"), 
+									'cmd': $(this).prop('value')
+								   },
+								}).done(function(data) {
+								  console.log(data);
+							});						
+						});*/
+					} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
+						var switchesContentString = '<input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
+				          	+ '<p><b>'+val['description']+'</b>'
+			              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code></p>';
+						
+						$('#switchesDiv').append(switchesContentString);  	
+			              	
+						$('#'+val['code']).change(function() {
+							console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
+							
+							$.ajax({
+								  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
+								  data: { 
+									'devId': $(this).prop("id"),
+									'type': "SWITCH",
+									'cmd': $(this).prop('checked') ? "on" : "off"
+								   },
+								   success: function(data) {
+									console.log(data);
+								   },
+								   error: function (request, error) {
+									showError("lettura dispositvi ZWave non effettuata: " + error);
+								   } 
+							});
+						});
+					};
+		            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
+		            $("[data-toggle='toggle']").bootstrapToggle();
+		            showSuccess("lettura dispositvi ZWave effettuata con successo");
 				}
-			}
-            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
-            $("[data-toggle='toggle']").bootstrapToggle();		              					
+		    },
+		    error: function (request, error) {
+		    	showError("lettura dispositvi ZWave non effettuata: " + error);
+		    }
+		    		    
 		});		
 		
 		//load multimedia file path
 		var jsonData = $.ajax({
 			url: '/SensoryTurtlesWeb/rest/MediaFileResource/readList',
-			    dataType: 'json',
-			}).done(function (data) {
-			for (var idx in data) {
-				console.log(data[idx]);
-				$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(data[idx])+"') class=\"list-group-item \">"+data[idx]+"</a>");
-				//<a href=javascript:setFileName('aa') class="list-group-item  ">CP 6 Ottobre.pdf</a>
-				if (idx==0) {
-					$("#filefullpath").val(data[idx]);
+			dataType: 'json',
+			success: function (data) {
+				for (var idx in data) {
+					console.log(data[idx]);
+					$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(data[idx])+"') class=\"list-group-item \">"+data[idx]+"</a>");
+					//<a href=javascript:setFileName('aa') class="list-group-item  ">CP 6 Ottobre.pdf</a>
+					if (idx==0) {
+						$("#filefullpath").val(data[idx]);
+					}
 				}
-			}
-		});			
+				showSuccess("lettura di " + data.lentgh + " file multimediali effettuata con successo");
+		    },
+		    error: function (request, error) {
+		    	showError("lettura file multimediali non effettuata: " + error);
+		    }
+		});		
+			
 		
 		
 		//media player buttons
 		function startMPlayer(file){
 			$.ajax({
-				  url: "/SensoryTurtlesWeb/rest/MPlayerResource/start",
-				  data: {  
-					'file': file
-				   },
-				}).done(function(data) {
-				  console.log(data);
-			}); 						
+				url: "/SensoryTurtlesWeb/rest/MPlayerResource/start",
+				data: {  
+					'file': file,
+					'idTherapist': $("#idTherapist").val(),
+					'idMember': $("#idMember").val()
+				},
+				success: function (data) {
+				  	console.log(data);
+			    },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                var errMsg = 'status code: '+jqXHR.status+'; errorThrown: ' + errorThrown + '; jqXHR.responseText: '+jqXHR.responseText;
+			    	showError("errore in fase di avvio player multimediale per file "+file+"; errore: " + errMsg);
+			    }
+			});		 						
 		}
 		
 		function invokeMPlayer(cmd){
 			$.ajax({
 				  url: "/SensoryTurtlesWeb/rest/MPlayerResource/invoke",
 				  data: {  
-					'cmd': cmd
+					'cmd': cmd,
+					'idTherapist': $("#idTherapist").val(),
+					'idMember': $("#idMember").val()					
 				   },
-				}).done(function(data) {
-				  console.log(data);
-			}); 						
+				success: function (data) {
+				  	console.log(data);
+			    },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	            	showError("errore in fase di esecuzione comando "+cmd+" player multimediale; errore: " + error);	            	
+	            }
+			});		
 		}
 		
 		function setFileName(fileName){
@@ -312,12 +339,27 @@
 				  data: { 
 					'devId': devId, 
 					'type': "RGB",
-					'cmd': rgbColor
+					'cmd': rgbColor,	
+					'idTherapist': $("#idTherapist").val(),
+					'idMember': $("#idMember").val()					
 				   },
-				}).done(function(data) {
-				  console.log(data);
+				   success: function(data) {
+				  	console.log(data);				  
+				   }, 
+				   error: function (request, error) {
+					showError("impostazione colore "+hexColor+" su dispositivo "+devId+" non riuscito; errore: " + error);
+				   } 				  
 			});											
 		}		
+		
+		
+		function showError(err){
+			$("div.bsalert").html("<div class=\"alert alert-danger\" role=\"alert\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+new Date()+"<strong> Errore! </strong>"+err+"</div>");
+		}
+		
+		function showSuccess(msg){
+			$("div.bsalert").html("<div class=\"alert alert-success\" role=\"alert\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+new Date()+"<strong> Ben fatto! </strong>"+msg+"</div>");			
+		}
 	</script>
 
 

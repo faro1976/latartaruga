@@ -4,6 +4,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.log4j.Logger;
 
@@ -25,10 +27,18 @@ public class MPlayerResource {
 	@GET
 	@Path("/start")
     @Produces(MediaType.APPLICATION_JSON)
-    public void start(@QueryParam("file")String file) throws Exception{
+    public Response start(@QueryParam("file")String file) {
 		file = filePath + "/" + file;
 		logger.info("cmd media player, start play " + file);
-		player.play(file);				
+		try {
+			player.play(file);	
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			String errMsg = ex.getMessage().replaceAll("\"", "");
+			System.out.println(errMsg);
+			return Response.status(Status.BAD_REQUEST).entity(errMsg).build();
+		}
+		return Response.ok("", MediaType.APPLICATION_JSON).build();						
 	}
 
 	@GET
