@@ -15,7 +15,7 @@
 
 	<!-- JTable include -->
     <link href="../widget/jtable.2.4.0/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
-	<link href="../widget/jtable.2.4.0/scripts/jtable/themes/metro/darkorange/jtable.css" rel="stylesheet" type="text/css" />
+	<link href="../widget/jtable.2.4.0/scripts/jtable/themes/lightcolor/orange/jtable.css" rel="stylesheet" type="text/css" />
 	<!--  JQuery include - embedded version for JTable -->
 	<script src="../widget/jtable.2.4.0/scripts/jquery-1.6.4.min.js" type="text/javascript"></script>
     <script src="../widget/jtable.2.4.0/scripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
