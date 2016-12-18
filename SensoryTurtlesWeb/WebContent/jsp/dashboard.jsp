@@ -48,7 +48,6 @@
   <body>
 	<div class="container-fluid">
 	  	<jsp:include page="header.jsp"></jsp:include>
-		<div class="bsalert"></div>
 	  
 		<div class="panel panel-primary">
 			<div class=panel-heading> <h3 class=panel-title>multimedia player</h3></div>
@@ -58,7 +57,7 @@
 			</div>
 			
 			<div >
-	  			<label for="usr">File full path:</label>
+	  			<label for="usr">Selected file:</label>
 	  			<input type="text" class="form-control" id="filefullpath" >
 			</div>
 	  		<div >  		  			
@@ -372,12 +371,19 @@
 		function showSuccess(msg){
 			$("div.bsalert").html("<div class=\"alert alert-success\" role=\"alert\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+new Date()+"<strong> Ben fatto! </strong>"+msg+"</div>");			
 		}
+		
+		function invokeOpSysCmd(cmd){
+			$.ajax({
+				  url: "/SensoryTurtlesWeb/rest/OpSysResource/invoke",
+				  data: { 
+					'cmd': cmd					
+				   },
+				   success: function(data) {
+				  	console.log(data);				  
+				   } 				  
+			});					
+		}
 	</script>
-
-
-
-
-
 	
   </body>
 </html>

@@ -22,6 +22,8 @@
 		<div class="hidden-xs col-md-1">
 			<img class="img-rounded img-responsive" src="../img/facciaasinistratartarugatrasparentelight.jpg"/>
 		</div>
+	</div>		
+	<div class="row">		
 		<div class="col-xs-12 col-md-3 text-center">
 				<div class="form-group">
 				<span style="font-family:HelveticaRoundedLTStd-BdCn;">
@@ -32,6 +34,14 @@
   				 </span>
 				</div>  				 			
 		</div>
-		
+		<div class="bsalert col-xs-12 col-md-6"></div>		
+	  	<div class="col-xs-12 col-md-3 text-center">
+	  		<button type="button" class="btn btn-warning" aria-label="Left Align" onclick="invokeOpSysCmd('ls')">
+  				<span class="glyphicon glyphicon-step-backward" aria-hidden="true">Riavvia</span>
+			</button>	  					
+	  		<button type="button" class="btn btn-danger" aria-label="Left Align" onclick="invokeOpSysCmd('du')">
+  				<span class="glyphicon glyphicon-off" aria-hidden="true">Spegni</span>
+			</button>			
+	  	</div>	  	
 	</div>
 </div>
