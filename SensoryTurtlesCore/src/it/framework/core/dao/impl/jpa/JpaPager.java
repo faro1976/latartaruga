@@ -24,12 +24,12 @@ public class JpaPager<E> implements IListPager<E>  {
 	private Function<Root<E>, Expression<Boolean>> expression;
 	private IOffset offset;
 	private List<? extends ISortProperty> sortProperties;
+	private TypedQuery<E> query;
 
 	JpaPager(EntityManager em,Class<E> entityClass,IOffset offset) {
 		this.em = em;
 		this.entityClass = entityClass;
 		this.offset = offset;
-		this.jpqlQuery = jpqlQuery;
 	}
 	
 	JpaPager(EntityManager em,Class<E> entityClass,IOffset offset,String jpqlQuery) {
@@ -37,6 +37,13 @@ public class JpaPager<E> implements IListPager<E>  {
 		this.entityClass = entityClass;
 		this.offset = offset;
 		this.jpqlQuery = jpqlQuery;
+	}
+	
+	JpaPager(EntityManager em,Class<E> entityClass,IOffset offset,TypedQuery<E> query) {
+		this.em = em;
+		this.entityClass = entityClass;
+		this.offset = offset;
+		this.query = query;
 	}
 
 	JpaPager(EntityManager em,Class<E> entityClass,IOffset offset,Function<Root<E>, Expression<Boolean>> expression) {
@@ -46,15 +53,19 @@ public class JpaPager<E> implements IListPager<E>  {
 		this.expression = expression;
 	}
 	
-	JpaPager(Function<Root<E>, Expression<Boolean>> expression) {
+	JpaPager(EntityManager em,Class<E> entityClass,Function<Root<E>, Expression<Boolean>> expression) {
+		this.em = em;
 		this.expression = expression;
+		this.entityClass = entityClass;
 	}
 	
 
 	@Override
 	public List<E> getResult() {
 		TypedQuery<E> q;
-		if (jpqlQuery != null) {
+		if (query != null) {
+			q=query;
+		} else if (jpqlQuery != null) {
 			StringBuilder sb = new StringBuilder(jpqlQuery);
 			if (sortProperties != null) {
 				sb.append(" order by");

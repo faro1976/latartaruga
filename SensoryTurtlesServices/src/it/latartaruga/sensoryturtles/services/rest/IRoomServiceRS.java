@@ -38,11 +38,11 @@ public interface IRoomServiceRS {
 	 
 	 @GET
 	 @Path("Room/{idRoom}/ControllersRGB")
-	 public List<ControllerRGB> getControllerRGBByRoom(@PathParam("idRoom") String idRoom);
+	 public  IPagedResponse<List<? extends ControllerRGB>> getControllerRGBByRoom(@PathParam("idRoom") String idRoom);
 	 
 	 @GET
 	 @Path("Room/{idRoom}/Multimedia")
-	 public List<Multimedia> getMultimediaByRoom(@PathParam("idRoom") String idRoom);
+	 public IPagedResponse<List<? extends Multimedia>> getMultimediaByRoom(@PathParam("idRoom") String idRoom);
 	 	 
 	 @POST
 	 @Path("CreateRoom")

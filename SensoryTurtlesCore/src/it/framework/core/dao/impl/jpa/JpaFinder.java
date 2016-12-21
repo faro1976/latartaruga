@@ -82,8 +82,12 @@ public class JpaFinder<E> {
 		return new JpaPager<E>(em,entityClass,offset,jpqlQuery);
 	}
 	
+	protected IListPager<E> getPager(IOffset offset,TypedQuery<E> query) {
+		return new JpaPager<E>(em,entityClass,offset,query);
+	}
+	
 	protected IListPager<E> getPager(Function<Root<E>, Expression<Boolean>> expressions) {
-		return new JpaPager(expressions);
+		return new JpaPager(em,entityClass,expressions);
 	}
 
 

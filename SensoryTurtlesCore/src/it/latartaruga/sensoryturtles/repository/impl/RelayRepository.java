@@ -30,6 +30,7 @@ public class RelayRepository extends AbstractRepository implements IRelayReposit
 	public RelayRepository(IDAOFactoryTurtles daoFactoryTurtles, EntityManager em) {
 		super();
 		deviceRelayDAO = daoFactoryTurtles.getDeviceReleayDAO(em);
+		
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class RelayRepository extends AbstractRepository implements IRelayReposit
 	
 	@Override
 	public IListPager<? extends Relay> findByRoom(IOffset offset,Integer idRoom) {
-		IListPager<? extends DeviceRelayEntity> listDeviceRelaysEntities = deviceRelayDAO.findByRoom(idRoom);
+		IListPager<? extends DeviceRelayEntity> listDeviceRelaysEntities = deviceRelayDAO.findByRoom(offset,idRoom);
 		List<Relay> listRelays= new ArrayList<>();
 		for (DeviceRelayEntity deviceRelayEntity : listDeviceRelaysEntities.getResult()) {
 			listRelays.add(createRelay(deviceRelayEntity));

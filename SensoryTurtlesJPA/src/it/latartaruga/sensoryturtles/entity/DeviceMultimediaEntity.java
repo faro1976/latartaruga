@@ -8,9 +8,9 @@ import javax.persistence.*;
  * The persistent class for the device_multimedia database table.
  * 
  */
-@Entity
+@Entity(name="device_multimedia")
 @Table(name="device_multimedia")
-@NamedQuery(name="DeviceMultimediaEntity.findAll", query="SELECT d FROM DeviceMultimediaEntity d")
+@NamedQueries({ @NamedQuery(name = "DeviceMultimediaEntity.findByRoom", query = "select o from device_multimedia o where o.id.idROOM= :idROOMValue")})
 public class DeviceMultimediaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

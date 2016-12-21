@@ -1,6 +1,5 @@
 package it.latartaruga.sensoryturtles.services.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,10 +19,11 @@ import it.framework.core.exposer.impl.RestExposer;
 import it.framework.core.service.impl.Offset;
 import it.latartarufa.sensoryturtles.ejb.factory.ServiceFactoryTurtles;
 import it.latartaruga.sensoryturtles.model.ControllerRGB;
-import it.latartaruga.sensoryturtles.model.DeviceKey;
 import it.latartaruga.sensoryturtles.model.Multimedia;
 import it.latartaruga.sensoryturtles.model.Relay;
 import it.latartaruga.sensoryturtles.model.Room;
+import it.latartaruga.sensoryturtles.service.interf.IControllerRGBService;
+import it.latartaruga.sensoryturtles.service.interf.IMultimediaService;
 import it.latartaruga.sensoryturtles.service.interf.IRelayService;
 import it.latartaruga.sensoryturtles.service.interf.IRoomService;
 
@@ -42,6 +42,14 @@ public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 	
 	private IRelayService getDelegateRelayService() {
 		return factory.getRelayService();
+	}
+	
+	private IControllerRGBService getDelegateControllerRGBService() {
+		return factory.getControllerRGBService();
+	}
+	
+	private IMultimediaService getDelegateMultimediaService() {
+		return factory.getMultimediaService();
 	}
 
 	@Override
@@ -81,27 +89,27 @@ public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 	}
 
 	@Override
-	public List<ControllerRGB> getControllerRGBByRoom(String idRoom) {
-		System.out.println("ID_ROOM:[" +idRoom + "]");
-		
-		List<ControllerRGB> devices = new ArrayList<>();
-		DeviceKey key = new DeviceKey(Integer.valueOf(idRoom), 2);
-		ControllerRGB device =  new ControllerRGB(key,"02","device 2",22);
-		devices.add(device);
-		
-		return devices;
+	public IPagedResponse<List<? extends ControllerRGB>> getControllerRGBByRoom(String idRoom) {
+		try {
+			IRequestContext requestContext = new RequestContext("WEB", null, null, "1", null);
+			IOffset offset = new Offset(0, Integer.MAX_VALUE);
+			IPagedRequest<Integer> pagedRequest = new PagedRequest(requestContext,offset,null,Integer.valueOf(idRoom));
+			return getDelegateControllerRGBService().ricercaControllerRGBByRoom(pagedRequest);
+		} catch (ServiceException  e){
+			throw createRestExeption(e);
+		}
 	}
 
 	@Override
-	public List<Multimedia> getMultimediaByRoom(String idRoom) {
-		System.out.println("ID_ROOM:[" +idRoom + "]");
-		
-		List<Multimedia> devices = new ArrayList<>();
-		DeviceKey key = new DeviceKey(Integer.valueOf(idRoom), 3);
-		Multimedia device =  new Multimedia(key,"03","device 3");
-		devices.add(device);
-		
-		return devices;
+	public IPagedResponse<List<? extends Multimedia>> getMultimediaByRoom(String idRoom) {
+		try {
+			IRequestContext requestContext = new RequestContext("WEB", null, null, "1", null);
+			IOffset offset = new Offset(0, Integer.MAX_VALUE);
+			IPagedRequest<Integer> pagedRequest = new PagedRequest(requestContext,offset,null,Integer.valueOf(idRoom));
+			return getDelegateMultimediaService().ricercaMultimediaByRoom(pagedRequest);
+		} catch (ServiceException  e){
+			throw createRestExeption(e);
+		}
 	}
 
 	@Override

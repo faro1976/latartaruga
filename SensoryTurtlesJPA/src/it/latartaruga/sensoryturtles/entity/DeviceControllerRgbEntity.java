@@ -8,9 +8,9 @@ import javax.persistence.*;
  * The persistent class for the device_controller_rgb database table.
  * 
  */
-@Entity
+@Entity(name="device_controller_rgb")
 @Table(name="device_controller_rgb")
-@NamedQuery(name="DeviceControllerRgbEntity.findAll", query="SELECT d FROM DeviceControllerRgbEntity d")
+@NamedQueries({ @NamedQuery(name = "DeviceControllerRgbEntity.findByRoom", query = "select o from device_controller_rgb o where o.id.idROOM= :idROOMValue")})
 public class DeviceControllerRgbEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

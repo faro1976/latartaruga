@@ -8,9 +8,9 @@ import javax.persistence.*;
  * The persistent class for the device_relay database table.
  * 
  */
-@Entity
+@Entity(name="device_relay")
 @Table(name="device_relay")
-@NamedQuery(name="DeviceRelayEntity.findAll", query="SELECT d FROM DeviceRelayEntity d")
+@NamedQueries({ @NamedQuery(name = "DeviceRelayEntity.findByRoom", query = "select o from device_relay o where o.id.idROOM= :idROOMValue")})
 public class DeviceRelayEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
