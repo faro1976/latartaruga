@@ -23,7 +23,8 @@
     
 </head>
 <body>
-	<div id="DeviceRelayTableContainer" style="width: 600px;"></div>
+	<div id="DeviceRelayTableContainer" style="width: 600px;"></div>	
+	<div id="RoomTableContainer" style="width: 600px;"></div>	
 	
 <script type="text/javascript">
     $(document).ready(function () {
@@ -62,6 +63,43 @@
         });
         
 		$('#DeviceRelayTableContainer').jtable('load');
+		
+		
+		
+        $('#RoomTableContainer').jtable({
+            title: 'Table ROOM',
+            actions: {
+                listAction: '../../SensoryTurtlesServices/rest/Configuration/CRUDRooms',
+                createAction: '../../rest/Configuration/CreateDeviceRelay',
+                updateAction: '../rest/Configuration/UpdateDeviceRelay',
+                deleteAction: '../rest/Configuration/DeleteDeviceRelay'
+            },
+            fields: {
+                idRoom: {
+                	key: true,
+                    title: 'code',
+                    width: '10%',
+					create: true,
+					edit: true,
+					list: true
+                },
+                code: {
+                    title: 'idRaspBerry',
+                    width: '20%'
+                },                
+                description: {
+                    title: 'descr',
+                    width: '60%'
+                },
+                className: {
+                    title: 'className',
+                    width: '10%'
+                }
+                
+            }
+        });
+        
+		$('#RoomTableContainer').jtable('load');		
     });
 </script>	
 </body>

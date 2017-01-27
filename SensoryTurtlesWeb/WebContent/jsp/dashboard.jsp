@@ -132,6 +132,7 @@
 				var rgbPaletteRow = $("<tr>");
 				var rgbCircleRow = $("<tr>");
 				var switchesRow = $("<tr>");
+				console.log("loading devices...");
 				for (var key in data) {
 					var val = data[key];
 					console.log(val['description']);					
@@ -222,6 +223,7 @@
 			url: '/SensoryTurtlesWeb/rest/MediaFileResource/readList',
 			dataType: 'json',
 			success: function (data) {
+				console.log("loading multimedia file paths...")
 				for (var idx in data) {
 					console.log(data[idx]);
 					$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(data[idx])+"') class=\"list-group-item \">"+data[idx]+"</a>");

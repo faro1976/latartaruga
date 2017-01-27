@@ -9,8 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import it.latartaruga.sensoryturtles.model.CRUDResult;
 import it.latartaruga.sensoryturtles.vo.RelayVO;
 
 @Path("/CRUDResource")
@@ -26,32 +25,4 @@ public class CRUDResource {
 		return new CRUDResult(CRUDResult.OK, ret);
     }
 	
-	public class CRUDResult{
-		public final static String OK="OK";
-		public final static String ERROR="ERROR";
-		
-		private String Result;
-		private List Records;
-		
-		@JsonProperty("Result")
-		public String getResult() {
-			return Result;
-		}
-		public void setResult(String result) {
-			Result = result;
-		}
-		
-		@JsonProperty("Records")
-		public List getRecords() {
-			return Records;
-		}
-		public void setRecords(List records) {
-			Records = records;
-		}
-		public CRUDResult(String result, List records) {
-			super();
-			Result = result;
-			Records = records;
-		}
-	}
 }
