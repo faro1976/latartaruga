@@ -28,11 +28,14 @@
 	<div id="snippet-block">
 		<p/>
 		<input id="<%=request.getParameter("idZWave") %>" type="text" data-wheelcolorpicker data-wcp-layout="block" />	
-		<div><b><%=request.getParameter("description") %></b>
-		<code style="color:red"><%=request.getParameter("code") %>#<%=request.getParameter("idZWave") %></code>
-		<button id='<%=request.getParameter("idZWave") %>-colordiv' style="display:inline" type="button" class="btn btn-default btn-sm">
-			<span class="glyphicon glyphicon-lamp"></span>
-		</button>					    
+		<div>
+			<p><b><%=request.getParameter("description") %></b></p>
+			<p><code style="color:red"><%=request.getParameter("code") %>#<%=request.getParameter("idZWave") %></code>
+			<button id='<%=request.getParameter("idZWave") %>-colordiv' style="display:inline;height:20px;width:40px;" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-lamp"></span>			
+			</button>
+			</p>
+		</div>					    
 	</div>
 
 <script>

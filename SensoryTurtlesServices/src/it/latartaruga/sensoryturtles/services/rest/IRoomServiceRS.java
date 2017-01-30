@@ -10,10 +10,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import it.framework.client.service.impl.RestFault;
 import it.framework.client.service.inferf.IPagedResponse;
 import it.framework.client.service.inferf.IResponse;
+import it.latartaruga.sensoryturtles.model.CRUDResult;
 import it.latartaruga.sensoryturtles.model.ControllerRGB;
 import it.latartaruga.sensoryturtles.model.Multimedia;
 import it.latartaruga.sensoryturtles.model.Relay;
@@ -27,6 +29,11 @@ public interface IRoomServiceRS {
 	 @GET
 	 @Path("Rooms")
 	 public IPagedResponse<List<? extends Room>> getRooms()  throws RestFault;
+	 
+	 @POST
+	 @Path("CRUDRooms")
+	 public CRUDResult readList();
+	 
 
 	 @GET
 	 @Path("Room/{idRoom}")

@@ -3,6 +3,10 @@ package it.latartaruga.sensoryturtles.services.rest;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import it.framework.client.service.impl.PagedRequest;
 import it.framework.client.service.impl.RequestContext;
@@ -18,6 +22,7 @@ import it.framework.client.service.inferf.IResponse;
 import it.framework.core.exposer.impl.RestExposer;
 import it.framework.core.service.impl.Offset;
 import it.latartarufa.sensoryturtles.ejb.factory.ServiceFactoryTurtles;
+import it.latartaruga.sensoryturtles.model.CRUDResult;
 import it.latartaruga.sensoryturtles.model.ControllerRGB;
 import it.latartaruga.sensoryturtles.model.Multimedia;
 import it.latartaruga.sensoryturtles.model.Relay;
@@ -64,6 +69,13 @@ public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 		}
 	}
 
+	#Override
+	public CRUDResult readList() {
+		IPagedResponse<List<? extends Room>> ret = getRooms();
+		return new CRUDResult(CRUDResult.OK, ret.getResult());
+    }
+	
+	
 	@Override
 	public IResponse<Room> getRoom(String idRoom) {
 		try {
