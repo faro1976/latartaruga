@@ -363,17 +363,6 @@
 			$("div.bsalert").html("<div class=\"alert alert-success\" role=\"alert\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+new Date()+"<strong> Ben fatto! </strong>"+msg+"</div>");			
 		}
 		
-		function invokeOpSysCmd(cmd){
-			$.ajax({
-				  url: "/SensoryTurtlesWeb/rest/OpSysResource/invoke",
-				  data: { 
-					'cmd': cmd					
-				   },
-				   success: function(data) {
-				  	console.log(data);				  
-				   } 				  
-			});					
-		}
 	</script>
 	
   </body>
