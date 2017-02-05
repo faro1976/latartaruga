@@ -69,7 +69,7 @@ public class RoomServicesRS extends RestExposer implements IRoomServiceRS {
 		}
 	}
 
-	#Override
+	@Override
 	public CRUDResult readList() {
 		IPagedResponse<List<? extends Room>> ret = getRooms();
 		return new CRUDResult(CRUDResult.OK, ret.getResult());

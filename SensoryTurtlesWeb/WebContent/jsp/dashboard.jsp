@@ -124,103 +124,92 @@
 		</div>
 	</div>
 	</div>
-	<script>		
+	<script>
 		var jsonData = $.ajax({
-			url: '/SensoryTurtlesWeb/rest/ZWaveDeviceResource/readList',
+			url: '/SensoryTurtlesServices/rest/Configuration/Room/1/ControllersRGB',
 			dataType: 'json',
 			success: function (data) {	
 				var rgbPaletteRow = $("<tr>");
 				var rgbCircleRow = $("<tr>");
-				var switchesRow = $("<tr>");
-				console.log("loading devices...");
+				console.log("loading RGB devices...");
 				for (var key in data) {
 					var val = data[key];
 					console.log(val['description']);					
 			              	
-					if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
-						var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idZWave']+"&code="+val['code']+"&description="+val['description'];
-	/*					var rgbContentString = '<input id=\"zwave-'+val['idZWave']+'\" type=\"text\" data-wheelcolorpicker data-wcp-layout=\"popup\" />'	
-					          	+ '<h4>'+val['description']+'</h4>'
-				              	+ '<span class=\"text-muted\">'+val['code']+'#'+val['idZWave']+'</span>'
-				              	+ '<img id="'+$(this).prop("id")+'-color" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">'
-						$('#rgbControllersDiv').append(rgbContentString);*/
-				              	
-/*						var iframe = document.createElement('iframe');				        					
-						iframe.setAttribute("src", rgbPageUrl);
-						iframe.setAttribute("width", 350);
-						iframe.setAttribute("height", 310);
-						iframe.setAttribute("border", 0);*/
-						var iframe = "<iframe src="+rgbPageUrl+"' width=350 height=310 border=0 ></iframe>";   
-						//document.getElementById("rgbControllersDiv").appendChild(iframe);
-						var circleCols ="<td>"+iframe+"</td>";						
-						rgbCircleRow.append(circleCols);
+					//if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
+					var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idRaspBerry']+"&code="+val['code']+"&description="+val['description'];
+					var iframe = "<iframe src="+rgbPageUrl+"' width=350 height=310 border=0 ></iframe>";   
+					var circleCols ="<td>"+iframe+"</td>";						
+					rgbCircleRow.append(circleCols);
 						
-						var tableDiv = document.createElement('div');
-						tableDiv.innerHTML='<table border="2" style="width:80%;height=40%;"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idZWave']+',&quot;#FFFFFF&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idZWave']+',&quot;#000000&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idZWave']+',&quot;#009F6B&quot;)">&nbsp;</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idZWave']+',&quot;#C40233&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idZWave']+',&quot;#FFD300&quot;)">&nbsp<bsp;/td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idZWave']+',&quot;#0087BD&quot;)">&nbsp;</td></tr></table>';
-//						document.getElementById("rgbControllersDiv").appendChild(tableDiv);						
-						var paletteCols ="<td>"+tableDiv.innerHTML+"</td>";
-			            rgbPaletteRow.append(paletteCols);
-						
-						
-	/*					$('#zwave-'+val['idZWave']).on('slidermove', function() {
-							console.log('Color of ZWave id '+$(this).prop('id')+': ' + $(this).prop('value'));
-							$($(this).prop("id")+'-colordiv').css('background-color','red');
-							
-							$.ajax({
-								  url: "../../rest/ZWaveDeviceResource/invoke",
-								  data: { 
-									'devId': $(this).prop("id"), 
-									'cmd': $(this).prop('value')
-								   },
-								}).done(function(data) {
-								  console.log(data);
-							});						
-						});*/
-					} else if (val['className']=='it.latartaruga.sensoryturtles.vo.RelayVO') {
-						var switchesContentString = '<div style:"display:inline-block;"><input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
-				          	+ '<p><b>'+val['description']+'</b>'
-			              	+ '<code style="color:red">'+val['code']+'#'+val['idZWave']+'</code></p></div>';
-						
-			            //$('#switchesDiv').append(switchesContentString);			            			            
-			            var cols ="<td>"+switchesContentString+"</td>";
-			            switchesRow.append(cols);
-			              	
-						$('#'+val['code']).change(function() {
-							console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
-							
-							$.ajax({
-								  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
-								  data: { 
-									'devId': $(this).prop("id"),
-									'type': "SWITCH",
-									'cmd': $(this).prop('checked') ? "on" : "off"
-								   },
-								   success: function(data) {
-									console.log(data);
-								   },
-								   error: function (request, error) {
-									showError("lettura dispositvi ZWave non effettuata: " + error);
-								   } 
-							});
-						});
-					};
-		            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
-		            $("[data-toggle='toggle']").bootstrapToggle();		            		            		            
-		            showSuccess("lettura dispositvi ZWave effettuata con successo");
+					var tableDiv = document.createElement('div');
+					tableDiv.innerHTML='<table border="2" style="width:80%;height=40%;"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idRaspBerry']+',&quot;#FFFFFF&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idRaspBerry']+',&quot;#000000&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idRaspBerry']+',&quot;#009F6B&quot;)">&nbsp;</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idRaspBerry']+',&quot;#C40233&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idRaspBerry']+',&quot;#FFD300&quot;)">&nbsp<bsp;/td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idRaspBerry']+',&quot;#0087BD&quot;)">&nbsp;</td></tr></table>';
+					var paletteCols ="<td>"+tableDiv.innerHTML+"</td>";
+		            rgbPaletteRow.append(paletteCols);						
 				}
+							
 	            $("table.rgbPaletteTable").append(rgbPaletteRow);
-	            $("table.rgbCircleTable").append(rgbCircleRow);	            
-	            $("table.switchesTable").append(switchesRow);
+	            $("table.rgbCircleTable").append(rgbCircleRow);
+				showSuccess("lettura dispositvi RGB ZWave effettuata con successo");	            
 		    },
 		    error: function (request, error) {
-		    	showError("lettura dispositvi ZWave non effettuata: " + error);
-		    }
-		    		    
+		    	showError("lettura dispositvi RGB ZWave non effettuata: " + error);
+		    }		    		    
 		});		
+		
+		var jsonData = $.ajax({
+			url: '/SensoryTurtlesServices/rest/Configuration/Room/1/Relays',
+			dataType: 'json',
+			success: function (data) {	
+				var switchesRow = $("<tr>");
+				console.log("loading relay devices...");
+				for (var key in data) {
+					var val = data[key];
+					console.log(val['description']);					
+			              	
+					var switchesContentString = '<div style:"display:inline-block;"><input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
+		          	+ '<p><b>'+val['description']+'</b>'
+	              	+ '<code style="color:red">'+val['code']+'#'+val['idRaspBerry']+'</code></p></div>';
+				
+		            //$('#switchesDiv').append(switchesContentString);			            			            
+		            var cols ="<td>"+switchesContentString+"</td>";
+		            switchesRow.append(cols);
+	              	
+					$('#'+val['code']).change(function() {
+						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
+						
+						$.ajax({
+							  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
+							  data: { 
+								'devId': $(this).prop("id"),
+								'type': "SWITCH",
+								'cmd': $(this).prop('checked') ? "on" : "off"
+							   },
+							   success: function(data) {
+								console.log(data);
+							   },
+							   error: function (request, error) {
+								showError("lettura dispositvi ZWave non effettuata: " + error);
+							   } 
+						});
+					});										
+				}
+				
+	            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
+	            $("[data-toggle='toggle']").bootstrapToggle();		            		
+	            $("table.switchesTable").append(switchesRow);
+	            showSuccess("lettura dispositvi relay ZWave effettuata con successo");				
+		    },
+		    error: function (request, error) {
+		    	showError("lettura dispositvi relay ZWave non effettuata: " + error);
+		    }		    		    
+		});				
+
+		
 		
 		//load multimedia file path
 		var jsonData = $.ajax({
-			url: '/SensoryTurtlesWeb/rest/MediaFileResource/readList',
+			url: '/SensoryTurtlesServices/rest/Configuration/Room/1/Multimedia',
 			dataType: 'json',
 			success: function (data) {
 				console.log("loading multimedia file paths...")
