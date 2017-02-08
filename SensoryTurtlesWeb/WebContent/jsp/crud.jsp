@@ -31,7 +31,7 @@
         $('#DeviceRelayTableContainer').jtable({
             title: 'Table DEVICE_RELAY',
             actions: {
-                listAction: '../rest/CRUDResource/DeviceRelayList',
+                listAction: '../../SensoryTurtlesServices/rest/Configuration/Room/1/Relays',
                 createAction: '../rest/CRUDResource/CreateDeviceRelay',
                 updateAction: '../rest/CRUDResource/UpdateDeviceRelay',
                 deleteAction: '../rest/CRUDResource/DeleteDeviceRelay'
@@ -47,7 +47,7 @@
 					//type: 'date'
                 },
                 description: {
-                    title: 'descr',
+                    title: 'description',
                     width: '60%'
                 },
                 idZWave: {
