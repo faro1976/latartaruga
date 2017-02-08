@@ -43,4 +43,9 @@ public class PagedRequest<T> implements IPagedRequest<T> {
 		return sortProperties;
 	}
 
+	@Override
+	public void setContext(IRequestContext requestContext) {
+		this.setContext(requestContext);
+	}
+
 }

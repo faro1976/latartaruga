@@ -14,7 +14,6 @@ public class DeviceRelayEntityPK implements Serializable {
 
 	private int idDEVICE;
 
-	@Column(insertable=false, updatable=false)
 	private int idROOM;
 
 	public DeviceRelayEntityPK() {

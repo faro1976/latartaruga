@@ -6,7 +6,6 @@ public interface IErrorConfMessage {
 
 	public String getApplicationId();
 
-	public String getNotify();
 
 	public String getSourceCode();
 

@@ -16,7 +16,8 @@ public class DeviceRelayEntity implements Serializable {
 
 	@EmbeddedId
 	private DeviceRelayEntityPK id;
-
+	
+	
 	private String code;
 
 	private String descr;
@@ -38,6 +39,7 @@ public class DeviceRelayEntity implements Serializable {
 	public void setId(DeviceRelayEntityPK id) {
 		this.id = id;
 	}
+
 
 	public String getCode() {
 		return this.code;

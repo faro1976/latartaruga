@@ -3,6 +3,7 @@ package it.latartaruga.sensoryturtles.repository.impl;
 import javax.persistence.EntityManager;
 
 import it.latartaruga.sensoryturtles.dao.impl.jpa.DAOFactoryTurtlesJPA;
+import it.latartaruga.sensoryturtles.repository.interf.IApplicationLogRepository;
 import it.latartaruga.sensoryturtles.repository.interf.IControllerRGBRepository;
 import it.latartaruga.sensoryturtles.repository.interf.IMultimediaRepository;
 import it.latartaruga.sensoryturtles.repository.interf.IRelayRepository;
@@ -36,6 +37,11 @@ public class RepositoryFactoryTurtles implements IRepositoryFactoryTurtles {
 	@Override
 	public IControllerRGBRepository getControllerRGBRepository() {
 		return new ControllerRGBRepository(new DAOFactoryTurtlesJPA(), em);
+	}
+
+	@Override
+	public IApplicationLogRepository getApplicationLogRepository() {
+		return new ApplicationLogRepository(new DAOFactoryTurtlesJPA(), em);
 	}
 
 

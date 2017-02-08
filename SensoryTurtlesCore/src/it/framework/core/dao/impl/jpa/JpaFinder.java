@@ -1,6 +1,5 @@
 package it.framework.core.dao.impl.jpa;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -17,8 +16,6 @@ import javax.persistence.criteria.Root;
 import com.google.common.collect.Lists;
 
 import it.framework.client.service.inferf.IOffset;
-import it.framework.client.service.inferf.ISortProperty;
-import it.framework.core.dao.enums.Order;
 import it.framework.core.dao.impl.StoredProcedureCall;
 import it.framework.core.dao.interf.IListPager;
 import it.framework.core.dao.interf.IProperty;
@@ -123,4 +120,5 @@ public class JpaFinder<E> {
 	protected StoredProcedureCall createStoredProcedureCall(String procedureName) {
 		return new StoredProcedureCall(em.createStoredProcedureQuery(procedureName));
 	}
+
 }

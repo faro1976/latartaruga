@@ -10,5 +10,6 @@ public interface IDAOFactoryTurtles extends IDAOFactory {
 	public IDeviceRelayDAO getDeviceReleayDAO(EntityManager em);
 	public IDeviceControllerRGBDAO getDeviceControllerRGBDAO(EntityManager em);
 	public IDeviceMultimediaDAO getDeviceMultimediaDAO(EntityManager em);
+	public IApplicationLogDAO getApplicationLogDAO(EntityManager em);
 	
 }

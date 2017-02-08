@@ -23,6 +23,11 @@ public class RequestParameter<P> implements IRequestParameter<P>{
 	public P getParameter() {
 		return parameter;
 	}
+
+	@Override
+	public void setContext(IRequestContext requestContext) {
+		this.requestContext=requestContext;
+	}
 	
 
 }

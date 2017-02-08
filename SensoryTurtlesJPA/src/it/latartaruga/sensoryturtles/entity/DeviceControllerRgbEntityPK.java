@@ -14,7 +14,6 @@ public class DeviceControllerRgbEntityPK implements Serializable {
 
 	private int idDEVICE;
 
-	@Column(insertable=false, updatable=false)
 	private int idROOM;
 
 	public DeviceControllerRgbEntityPK() {

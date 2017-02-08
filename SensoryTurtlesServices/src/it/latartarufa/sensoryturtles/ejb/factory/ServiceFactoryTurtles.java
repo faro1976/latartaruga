@@ -9,16 +9,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.framework.core.error.impl.ApplicationErrorService;
+import it.framework.core.error.impl.ErrorFormatterServiceImpl;
+import it.framework.core.error.impl.ErrorRepository;
 import it.framework.core.executor.impl.BaseExecutor;
 import it.framework.core.executor.impl.ExecutionId;
 import it.framework.core.executor.impl.OperationExecution;
 import it.framework.core.executor.interf.IExecutionId;
 import it.latartaruga.sensoryturtles.properties.TurtlesProperties;
 import it.latartaruga.sensoryturtles.repository.impl.RepositoryFactoryTurtles;
+import it.latartaruga.sensoryturtles.service.impl.ApplicationLogService;
 import it.latartaruga.sensoryturtles.service.impl.ControllerRGBService;
 import it.latartaruga.sensoryturtles.service.impl.MultimediaService;
 import it.latartaruga.sensoryturtles.service.impl.RelayService;
 import it.latartaruga.sensoryturtles.service.impl.RoomService;
+import it.latartaruga.sensoryturtles.service.interf.IApplicationLogService;
 import it.latartaruga.sensoryturtles.service.interf.IControllerRGBService;
 import it.latartaruga.sensoryturtles.service.interf.IMultimediaService;
 import it.latartaruga.sensoryturtles.service.interf.IRelayService;
@@ -53,7 +57,7 @@ public class ServiceFactoryTurtles {
 		ApplicationErrorService errorRepository = new ApplicationErrorService(
 				PROPERTIES.getApplicationId(),
 				PROPERTIES.getErrorSource(),
-				null);
+				new ErrorFormatterServiceImpl(new ErrorRepository()));
 		executor = new BaseExecutor(PROPERTIES, operationEvent, errorRepository, executionIdRepository);
 		repositoryFactory = new RepositoryFactoryTurtles(getOnlineEm());
 	}
@@ -78,6 +82,10 @@ public class ServiceFactoryTurtles {
 		return new MultimediaService(repositoryFactory, executor);
 	}
 
-
+	public IApplicationLogService getApplicationLogService() {
+		return new ApplicationLogService(repositoryFactory, executor);
+	}
+	
+	
 
 }

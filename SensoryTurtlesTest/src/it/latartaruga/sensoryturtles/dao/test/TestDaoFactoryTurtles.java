@@ -6,6 +6,7 @@ import it.framework.test.dao.impl.TestDaoFactory;
 import it.framework.test.dao.impl.TestProperties;
 import it.latartaruga.sensoryturtles.dao.impl.jpa.DeviceRelayDAOJPA;
 import it.latartaruga.sensoryturtles.dao.impl.jpa.RoomDAOJPA;
+import it.latartaruga.sensoryturtles.dao.interf.IApplicationLogDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IDAOFactoryTurtles;
 import it.latartaruga.sensoryturtles.dao.interf.IDeviceControllerRGBDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IDeviceMultimediaDAO;
@@ -43,6 +44,13 @@ public class TestDaoFactoryTurtles extends TestDaoFactory  implements IDAOFactor
 
 	@Override
 	public IDeviceMultimediaDAO getDeviceMultimediaDAO(EntityManager em) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IApplicationLogDAO getApplicationLogDAO(EntityManager em) {
 		// TODO Auto-generated method stub
 		return null;
 	}

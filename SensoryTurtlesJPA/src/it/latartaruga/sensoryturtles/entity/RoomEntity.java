@@ -27,10 +27,6 @@ public class RoomEntity implements Serializable {
 	@OneToMany(mappedBy="room")
 	private List<DeviceControllerRgbEntity> deviceControllerRgbs;
 
-	//bi-directional many-to-one association to DeviceMultimediaEntity
-	@OneToMany(mappedBy="room")
-	private List<DeviceMultimediaEntity> deviceMultimedias;
-
 	//bi-directional many-to-one association to DeviceRelayEntity
 	@OneToMany(mappedBy="room")
 	private List<DeviceRelayEntity> deviceRelays;
@@ -84,28 +80,7 @@ public class RoomEntity implements Serializable {
 		return deviceControllerRgb;
 	}
 
-	public List<DeviceMultimediaEntity> getDeviceMultimedias() {
-		return this.deviceMultimedias;
-	}
-
-	public void setDeviceMultimedias(List<DeviceMultimediaEntity> deviceMultimedias) {
-		this.deviceMultimedias = deviceMultimedias;
-	}
-
-	public DeviceMultimediaEntity addDeviceMultimedia(DeviceMultimediaEntity deviceMultimedia) {
-		getDeviceMultimedias().add(deviceMultimedia);
-		deviceMultimedia.setRoom(this);
-
-		return deviceMultimedia;
-	}
-
-	public DeviceMultimediaEntity removeDeviceMultimedia(DeviceMultimediaEntity deviceMultimedia) {
-		getDeviceMultimedias().remove(deviceMultimedia);
-		deviceMultimedia.setRoom(null);
-
-		return deviceMultimedia;
-	}
-
+	
 	public List<DeviceRelayEntity> getDeviceRelays() {
 		return this.deviceRelays;
 	}

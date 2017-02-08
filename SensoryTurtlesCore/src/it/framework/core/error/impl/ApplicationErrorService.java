@@ -26,8 +26,7 @@ public class ApplicationErrorService implements IErrorRepository {
 	public String getMessage(String errorCode, Map<String, Object> parameters) {
 		IErrorConfMessage errorMessage;
 		try {
-			errorMessage = errorFormatter.formatMessage(applicationId, errorCode, errorSource,
-					parameters);
+			errorMessage = errorFormatter.formatMessage(applicationId, errorCode, errorSource,parameters);
 		} catch (OperationException e) {
 			throw new FaultReaderRuntimeException(e);
 		}

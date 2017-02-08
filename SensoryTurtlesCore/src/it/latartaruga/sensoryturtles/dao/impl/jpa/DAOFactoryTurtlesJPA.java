@@ -2,11 +2,13 @@ package it.latartaruga.sensoryturtles.dao.impl.jpa;
 
 import javax.persistence.EntityManager;
 
+import it.latartaruga.sensoryturtles.dao.interf.IApplicationLogDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IDAOFactoryTurtles;
 import it.latartaruga.sensoryturtles.dao.interf.IDeviceControllerRGBDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IDeviceMultimediaDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IDeviceRelayDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IRoomDAO;
+import it.latartaruga.sensoryturtles.entity.ApplicationLogEntity;
 import it.latartaruga.sensoryturtles.entity.DeviceControllerRgbEntity;
 import it.latartaruga.sensoryturtles.entity.DeviceMultimediaEntity;
 import it.latartaruga.sensoryturtles.entity.DeviceRelayEntity;
@@ -32,6 +34,11 @@ public class DAOFactoryTurtlesJPA implements IDAOFactoryTurtles {
 	@Override
 	public IDeviceMultimediaDAO getDeviceMultimediaDAO(EntityManager em) {
 		return new DeviceMultimediaDAOJPA(em,DeviceMultimediaEntity.class);
+	}
+
+	@Override
+	public IApplicationLogDAO getApplicationLogDAO(EntityManager em) {
+		return new ApplicationLogDAOJPA(em, ApplicationLogEntity.class);
 	}
 
 }

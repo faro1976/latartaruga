@@ -7,4 +7,5 @@ public interface IRepositoryFactoryTurtles extends IRepositoryFactory {
 	 IRelayRepository getRelayRepository();
 	 IControllerRGBRepository getControllerRGBRepository();
 	 IMultimediaRepository getMultimediaRepository();
+	 IApplicationLogRepository getApplicationLogRepository();
 }

@@ -2,10 +2,8 @@ package it.framework.core.dao.impl.jpa;
 
 import javax.persistence.EntityManager;
 
-import it.framework.client.service.inferf.IOffset;
 import it.framework.core.dao.impl.StoredProcedureCall;
 import it.framework.core.dao.interf.IDao;
-import it.framework.core.dao.interf.IListPager;
 
 public class JpaDao<E, K> extends JpaFinder<E> implements IDao<E, K> {
 

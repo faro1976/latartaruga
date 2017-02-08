@@ -8,15 +8,15 @@ import javax.persistence.*;
  * The persistent class for the device_controller_rgb database table.
  * 
  */
-@Entity(name="device_controller_rgb")
+@Entity
 @Table(name="device_controller_rgb")
-@NamedQueries({ @NamedQuery(name = "DeviceControllerRgbEntity.findByRoom", query = "select o from device_controller_rgb o where o.id.idROOM= :idROOMValue")})
+@NamedQueries({ @NamedQuery(name = "DeviceControllerRgbEntity.findByRoom", query = "select o from DeviceControllerRgbEntity o where o.id.idROOM= :idROOMValue")})
 public class DeviceControllerRgbEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private DeviceControllerRgbEntityPK id;
-
+	
 	private String code;
 
 	private String descr;
@@ -38,6 +38,7 @@ public class DeviceControllerRgbEntity implements Serializable {
 	public void setId(DeviceControllerRgbEntityPK id) {
 		this.id = id;
 	}
+
 
 	public String getCode() {
 		return this.code;

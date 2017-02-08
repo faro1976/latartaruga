@@ -20,6 +20,8 @@ public abstract class BusinessOperation<P, R> implements IOperation<R> {
 		this.businessRequest = businessRequest;
 		this.level = Level.NORMAL;
 	}
+	
+	
 
 	public BusinessOperation(IRequestParameter<P> businessRequest, Level level) {
 		this.businessRequest = businessRequest;
