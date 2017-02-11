@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity(name="device_relay")
-@Table(name="device_relay")
+@Table(name="DEVICE_RELAY")
 @NamedQueries({ @NamedQuery(name = "DeviceRelayEntity.findByRoom", query = "select o from device_relay o where o.id.idROOM= :idROOMValue")})
 public class DeviceRelayEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="device_multimedia")
+@Table(name="DEVICE_MULTIMEDIA")
 @NamedQueries({ @NamedQuery(name = "DeviceMultimediaEntity.findByRoom", query = "select o from DeviceMultimediaEntity o where o.id.idROOM= :idROOMValue")})
 public class DeviceMultimediaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

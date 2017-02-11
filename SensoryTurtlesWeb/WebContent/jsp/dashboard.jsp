@@ -1,3 +1,4 @@
+<%@page import="it.latartaruga.sensoryturtles.rest.MPlayerResource"%>
 <%@page import="it.latartaruga.sensoryturtles.util.PropertiesHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -39,9 +40,8 @@
 	</style>	
 
 	<!-- toogle buttons -->
-	<link href="../css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="../js/bootstrap-toggle.min.js"></script>
-		
+	<link href="../css/bootstrap2-toggle.min.css" rel="stylesheet">
+	<script src="../js/bootstrap2-toggle.min.js"></script>
 
   </head>
 
@@ -124,7 +124,7 @@
 		</div>
 	</div>
 	</div>
-	<script>
+	<script>	
 		var jsonData = $.ajax({
 			url: '/SensoryTurtlesServices/rest/Configuration/Room/1/ControllersRGB',
 			dataType: 'json',
@@ -132,18 +132,18 @@
 				var rgbPaletteRow = $("<tr>");
 				var rgbCircleRow = $("<tr>");
 				console.log("loading RGB devices...");
-				for (var key in data) {
-					var val = data[key];
-					console.log(val['description']);					
-			              	
-					//if (val['className']=='it.latartaruga.sensoryturtles.vo.ControllerRGBVO') {
-					var rgbPageUrl = "colorPicker.jsp?idZWave=zwave-"+val['idRaspBerry']+"&code="+val['code']+"&description="+val['description'];
-					var iframe = "<iframe src="+rgbPageUrl+"' width=350 height=310 border=0 ></iframe>";   
+				var retArr = data["result"];
+				for(var i = 0; i < retArr.length; ++i){					
+					var val = retArr[i];
+					console.log(val['description']+":"+val["code"]);					
+			        //iframe color picker      	
+					var rgbPageUrl = "colorPicker.jsp?idZWave="+val['idRaspBerry']+"&code="+val['code']+"&description="+encodeURIComponent(val['description']);
+					var iframe = "<iframe src="+rgbPageUrl+" width=350 height=350 border=0 ></iframe>";   
 					var circleCols ="<td>"+iframe+"</td>";						
 					rgbCircleRow.append(circleCols);
-						
+					//color palette	
 					var tableDiv = document.createElement('div');
-					tableDiv.innerHTML='<table border="2" style="width:80%;height=40%;"><tr><td style="cursor:pointer;background-color:#FFFFFF" onclick="clickColor('+val['idRaspBerry']+',&quot;#FFFFFF&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor('+val['idRaspBerry']+',&quot;#000000&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor('+val['idRaspBerry']+',&quot;#009F6B&quot;)">&nbsp;</td></tr><tr><td style="cursor:pointer;background-color:#C40233" onclick="clickColor('+val['idRaspBerry']+',&quot;#C40233&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor('+val['idRaspBerry']+',&quot;#FFD300&quot;)">&nbsp<bsp;/td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor('+val['idRaspBerry']+',&quot;#0087BD&quot;)">&nbsp;</td></tr></table>';
+					tableDiv.innerHTML='<table border="2" style="width:80%;height=40%;"><tr><td style="cursor:pointer;background-color:#ffffff" onclick="clickColor(\''+val['description']+'\',&quot;#ffffff&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#000000" onclick="clickColor(\''+val['description']+'\',&quot;#000000&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#009F6B" onclick="clickColor(\''+val['description']+'\',&quot;#009f6b&quot;)">&nbsp;</td></tr><tr><td style="cursor:pointer;background-color:#ff0000" onclick="clickColor(\''+val['description']+'\',&quot;#ff0000&quot;)">&nbsp;</td><td style="cursor:pointer;background-color:#FFD300" onclick="clickColor(\''+val['description']+'\',&quot;#ffd300&quot;)">&nbsp<bsp;/td><td style="cursor:pointer;background-color:#0087BD" onclick="clickColor(\''+val['description']+'\',&quot;#0087bd&quot;)">&nbsp;</td></tr></table>';
 					var paletteCols ="<td>"+tableDiv.innerHTML+"</td>";
 		            rgbPaletteRow.append(paletteCols);						
 				}
@@ -157,53 +157,7 @@
 		    }		    		    
 		});		
 		
-		var jsonData = $.ajax({
-			url: '/SensoryTurtlesServices/rest/Configuration/Room/1/Relays',
-			dataType: 'json',
-			success: function (data) {	
-				var switchesRow = $("<tr>");
-				console.log("loading relay devices...");
-				for (var key in data) {
-					var val = data[key];
-					console.log(val['description']);					
-			              	
-					var switchesContentString = '<div style:"display:inline-block;"><input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-size=\"large\" data-on=\"'+val['description']+' On\" data-off=\"'+val['description']+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\">'
-		          	+ '<p><b>'+val['description']+'</b>'
-	              	+ '<code style="color:red">'+val['code']+'#'+val['idRaspBerry']+'</code></p></div>';
-				
-		            //$('#switchesDiv').append(switchesContentString);			            			            
-		            var cols ="<td>"+switchesContentString+"</td>";
-		            switchesRow.append(cols);
-	              	
-					$('#'+val['code']).change(function() {
-						console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
-						
-						$.ajax({
-							  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
-							  data: { 
-								'devId': $(this).prop("id"),
-								'type': "SWITCH",
-								'cmd': $(this).prop('checked') ? "on" : "off"
-							   },
-							   success: function(data) {
-								console.log(data);
-							   },
-							   error: function (request, error) {
-								showError("lettura dispositvi ZWave non effettuata: " + error);
-							   } 
-						});
-					});										
-				}
-				
-	            $("[data-toggle='toggle']").bootstrapToggle('destroy')                 
-	            $("[data-toggle='toggle']").bootstrapToggle();		            		
-	            $("table.switchesTable").append(switchesRow);
-	            showSuccess("lettura dispositvi relay ZWave effettuata con successo");				
-		    },
-		    error: function (request, error) {
-		    	showError("lettura dispositvi relay ZWave non effettuata: " + error);
-		    }		    		    
-		});				
+
 
 		
 		
@@ -213,14 +167,18 @@
 			dataType: 'json',
 			success: function (data) {
 				console.log("loading multimedia file paths...")
-				for (var idx in data) {
-					console.log(data[idx]);
-					$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(data[idx])+"') class=\"list-group-item \">"+data[idx]+"</a>");
+				var retArr = data["result"];
+				
+				for(var i = 0; i < retArr.length; ++i){					
+					var val = retArr[i];					
+					console.log(val["description"] + ": " + val["path"]);
+					$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(val["path"])+"') class=\"list-group-item \">"+val["path"]+"</a>");
 					//<a href=javascript:setFileName('aa') class="list-group-item  ">CP 6 Ottobre.pdf</a>
-					if (idx==0) {
-						$("#filefullpath").val(data[idx]);
+					if (i==0) {
+						$("#filefullpath").val(val["path"]);
 					}
 				}
+				
 				showSuccess("lettura dei file multimediali effettuata con successo");
 		    },
 		    error: function (request, error) {
@@ -241,6 +199,7 @@
 				},
 				success: function (data) {
 				  	console.log(data);
+				  	writeApplicationLog("-1","play", "MPLAYER")
 			    },
 	            error: function(jqXHR, textStatus, errorThrown) {
 	                var errMsg = 'status code: '+jqXHR.status+'; errorThrown: ' + errorThrown + '; jqXHR.responseText: '+jqXHR.responseText;
@@ -259,6 +218,7 @@
 				   },
 				success: function (data) {
 				  	console.log(data);
+				  	writeApplicationLog("-1",cmd, "MPLAYER")
 			    },
 	            error: function(jqXHR, textStatus, errorThrown) {
 	            	showError("errore in fase di esecuzione comando "+cmd+" player multimediale; errore: " + error);	            	
@@ -333,9 +293,9 @@
 		
 		
 		//set hue color
-		function clickColor(devId, hexColor){
+		function clickColor(devId, hexColor){			
 			var rgbColor =hexToRGB(hexColor, false); 
-			console.log(rgbColor);		
+			console.log(hexColor+","+rgbColor);		
 			$.ajax({
 				  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
 				  data: { 
@@ -345,8 +305,8 @@
 					'idTherapist': $("#idTherapist").val(),
 					'idMember': $("#idMember").val()					
 				   },
-				   success: function(data) {
-				  	console.log(data);				  
+				   success: function(data) {	
+				  	writeApplicationLog(devId, rgbColor, "RGB")
 				   }, 
 				   error: function (request, error) {
 					showError("impostazione colore "+hexColor+" su dispositivo "+devId+" non riuscito; errore: " + error);
@@ -363,7 +323,84 @@
 			$("div.bsalert").html("<div class=\"alert alert-success\" role=\"alert\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+new Date()+"<strong> Ben fatto! </strong>"+msg+"</div>");			
 		}
 		
+		$(document).ready(function() {
+		    console.log( "document is ready!" );
+		    
+			var jsonData = $.ajax({
+				url: '/SensoryTurtlesServices/rest/Configuration/Room/1/Relays',
+				dataType: 'json',
+				success: function (data) {	
+					var switchesRow = $("<tr>");
+					console.log("loading relay devices...");
+					var retArr = data["result"];
+					
+					for(var i = 0; i < retArr.length; ++i){					
+						var val = retArr[i];
+						console.log(val['description'] + ":" + val['code']);					
+				              	
+						var switchesContentString = '<label class="checkbox-inline"><input id=\"'+val['code']+'\"  type=\"checkbox\" checked data-toggle=\"toggle\" data-on=\"'+val['description']+' sparabolle '+' On\" data-off=\"'+val['description']+' sparabolle '+' Off\" data-onstyle=\"success\" data-offstyle=\"danger\" data-width=\"300\" data-height=\"75\">'
+						+ '<p><b>'+val['description']+'</b>'
+		              	+ '<code style="color:red">#'+val['idRaspBerry']+'</code></p></label>';
+
+			            var cols ="<td>"+switchesContentString+"</td>";
+			            switchesRow.append(cols);
+		              	
+			            $(function() {
+			                $("#"+val["code"]).change(function() {
+								console.log('Switch of ZWave id '+$(this).prop('id')+': ' + $(this).prop('checked'));
+								var cmd = $(this).prop('checked') ? "on" : "off";
+								var devId = $(this).prop("id")								
+								$.ajax({
+								  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
+								  data: { 
+									'devId': val["description"],
+									'type': "SWITCH",
+									'cmd': cmd,
+									'idTherapist': $("#idTherapist").val(),
+									'idMember': $("#idMember").val()																
+								   },
+								   success: function(data) {
+									console.log(data);
+									writeApplicationLog(devId, cmd, "SWITCH");									
+								   },
+								   error: function (request, error) {
+									showError("lettura dispositvi ZWave non effettuata: " + error);
+								   } 
+								});
+							})
+			            })
+					}
+					
+		            $("table.switchesTable").append(switchesRow);
+					$("[data-toggle='toggle']").bootstrapToggle('destroy')
+				    $("[data-toggle='toggle']").bootstrapToggle();		            								            
+		            showSuccess("lettura dispositvi relay ZWave effettuata con successo");				
+			    },
+			    error: function (request, error) {
+			    	showError("lettura dispositvi relay ZWave non effettuata: " + error);
+			    }		    		    
+			});				
+		    		    
+		});
+		
+		function writeApplicationLog(idDevice, cmd, typeDevice){
+			$.ajax({
+				  method: "POST",
+				  url: "/SensoryTurtlesServices/rest/ApplicationLog/CreateLog",
+				  contentType:"application/json",
+				  dataType:"json",
+				  data: "{\"therapist\":\""+$("#idTherapist").val()+"\",\"member\":\""+$("#idMember").val()+"\",\"idRoom\":1,\"idDevice\":-1,\"typeDevice\":\""+typeDevice+"\",\"cmdDevice\":\""+cmd+"\"}",
+				success: function (data) {
+				  	console.log(data);
+			    },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	            	showError("errore in fase di esecuzione comando CreateLog cmd:"+cmd+"; errore: " + errorThrown);	            	
+	            }
+			});					
+		}
+		
 	</script>
+	
 	
   </body>
 </html>

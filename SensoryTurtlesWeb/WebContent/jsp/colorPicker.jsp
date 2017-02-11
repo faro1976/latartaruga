@@ -29,8 +29,8 @@
 		<p/>
 		<input id="<%=request.getParameter("idZWave") %>" type="text" data-wheelcolorpicker data-wcp-layout="block" />	
 		<div>
-			<p><b><%=request.getParameter("description") %></b></p>
-			<p><code style="color:red"><%=request.getParameter("code") %>#<%=request.getParameter("idZWave") %></code>
+			<p><b><%=request.getParameter("description") %><BR>striscia LED</b></p>
+			<p><code style="color:red">#<%=request.getParameter("idZWave") %></code>
 			<button id='<%=request.getParameter("idZWave") %>-colordiv' style="display:inline;height:20px;width:40px;" type="button" class="btn btn-default btn-sm">
 			<span class="glyphicon glyphicon-lamp"></span>			
 			</button>
@@ -42,7 +42,7 @@
 	$('#<%=request.getParameter("idZWave")%>').on('slidermove', function() {
 		var hexColor = '#'+$(this).prop('value');
 		var rgbColor =hexToRGB(hexColor, false); 
-		console.log(rgbColor);
+		//console.log(rgbColor);
 		$('#<%=request.getParameter("idZWave") %>-colordiv').css('background-color', hexColor);		
 	});
 	
@@ -53,7 +53,7 @@
 		$.ajax({
 			  url: "/SensoryTurtlesWeb/rest/ZWaveDeviceResource/invoke",
 			  data: { 
-				'devId': '<%=request.getParameter("code") %>', 
+				'devId': '<%=request.getParameter("description") %>', 
 				'type': "RGB",
 				'cmd': rgbColor
 			   },

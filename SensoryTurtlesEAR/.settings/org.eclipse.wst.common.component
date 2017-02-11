@@ -25,5 +25,9 @@
         <dependent-module archiveName="commons-lang3-3.4.jar" deploy-path="/lib" handle="module:/classpath/lib/SensoryTurtlesExtlib/apache/commons-lang3-3.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="SensoryTurtlesWeb.war" deploy-path="/" handle="module:/resource/SensoryTurtlesWeb/SensoryTurtlesWeb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

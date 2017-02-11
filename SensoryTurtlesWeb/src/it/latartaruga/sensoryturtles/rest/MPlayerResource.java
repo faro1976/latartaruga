@@ -27,7 +27,7 @@ public class MPlayerResource {
 	@GET
 	@Path("/start")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response start(@QueryParam("file")String file) {
+    public Response start(@QueryParam("idTherapist")String idTherapist, @QueryParam("idMember")String idMember,@QueryParam("file")String file) {
 		file = filePath + "/" + file;
 		logger.info("cmd media player, start play " + file);
 		try {
@@ -44,7 +44,7 @@ public class MPlayerResource {
 	@GET
 	@Path("/invoke")
     @Produces(MediaType.APPLICATION_JSON)
-    public void invoke(@QueryParam("cmd")String cmd) throws Exception{
+    public void invoke(@QueryParam("idTherapist")String idTherapist, @QueryParam("idMember")String idMember, @QueryParam("cmd")String cmd) throws Exception{
 		logger.info("cmd media player, sending command ["+cmd+"]");
 		try {
 			if (cmd.equals(MPlayerCmdEnum.EXIT.toString())) player.exit();
@@ -59,6 +59,7 @@ public class MPlayerResource {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+
     }
 	
 }

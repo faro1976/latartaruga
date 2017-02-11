@@ -8,4 +8,10 @@
       <context-root>SensoryTurtlesServices</context-root>
     </web>
   </module>
+  <module>
+    <web>
+      <web-uri>SensoryTurtlesWeb.war</web-uri>
+      <context-root>SensoryTurtlesWeb</context-root>
+    </web>
+  </module>
 </application>
