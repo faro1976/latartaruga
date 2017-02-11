@@ -49,6 +49,34 @@
 	<div class="container-fluid">
 	  	<jsp:include page="header.jsp"></jsp:include>
 	  
+		<div class="panel panel-success">
+			<div class=panel-heading> <h3 class=panel-title>Switches on/off</h3></div>
+			<div class=panel-body>
+
+			<div class="col-xs-12 col-sm-6 col-md-8" >
+				<!-- <div id="switchesDiv" ></div> -->  
+				<table id="switchesTable" class="table switchesTable"></table>
+			</div>
+			 
+		</div>
+	
+		<div class="panel panel-info">
+			<div class=panel-heading> <h3 class=panel-title>RGB controllers</h3></div>
+			<div class=panel-body>
+
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<!-- <div id="rgbControllersDiv" ></div>  -->  
+				<table id="rgbCircleTable" class="table rgbCircleTable"></table>
+			</div>
+			
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<!-- <div id="rgbControllersDiv" ></div>  -->  
+				<table id="rgbPaletteTable" class="table rgbPaletteTable"></table>				
+			</div>
+			
+			</div>
+		</div>
+		
 		<div class="panel panel-primary">
 			<div class=panel-heading> <h3 class=panel-title>multimedia player</h3></div>
 			<div class=panel-body>
@@ -94,34 +122,7 @@
 			</div>	
 			</div>				
 		</div>
-
-		<div class="panel panel-success">
-			<div class=panel-heading> <h3 class=panel-title>Switches on/off</h3></div>
-			<div class=panel-body>
-
-			<div class="col-xs-12 col-sm-6 col-md-8" >
-				<!-- <div id="switchesDiv" ></div> -->  
-				<table id="switchesTable" class="table switchesTable"></table>
-			</div>
-			 
-		</div>
-	
-		<div class="panel panel-info">
-			<div class=panel-heading> <h3 class=panel-title>RGB controllers</h3></div>
-			<div class=panel-body>
-
-			<div class="col-xs-12 col-sm-6 col-md-8">
-				<!-- <div id="rgbControllersDiv" ></div>  -->  
-				<table id="rgbCircleTable" class="table rgbCircleTable"></table>
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-8">
-				<!-- <div id="rgbControllersDiv" ></div>  -->  
-				<table id="rgbPaletteTable" class="table rgbPaletteTable"></table>				
-			</div>
-			
-			</div>
-		</div>
+				
 	</div>
 	</div>
 	<script>	
@@ -172,8 +173,7 @@
 				for(var i = 0; i < retArr.length; ++i){					
 					var val = retArr[i];					
 					console.log(val["description"] + ": " + val["path"]);
-					$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(val["path"])+"') class=\"list-group-item \">"+val["path"]+"</a>");
-					//<a href=javascript:setFileName('aa') class="list-group-item  ">CP 6 Ottobre.pdf</a>
+					$(".media-list-group" ).append("<a href=javascript:setFileName('"+encodeURIComponent(val["path"])+"') class=\"list-group-item \">"+val["description"] + " -> "+val["path"]+"</a>");
 					if (i==0) {
 						$("#filefullpath").val(val["path"]);
 					}
@@ -221,7 +221,7 @@
 				  	writeApplicationLog("-1",cmd, "MPLAYER")
 			    },
 	            error: function(jqXHR, textStatus, errorThrown) {
-	            	showError("errore in fase di esecuzione comando "+cmd+" player multimediale; errore: " + error);	            	
+	            	showError("errore in fase di esecuzione comando "+cmd+" player multimediale; errore: " + errorThrown);	            	
 	            }
 			});		
 		}
@@ -282,11 +282,11 @@
 		    invokeMPlayer("EXIT");		    		    
 		}
 		
-		function buttonVolueDownPress() {
+		function buttonVolumeDownPress() {
 		    console.log("button volume down invoked.");
 		    invokeMPlayer("VOLDOWN");		    
 		}
-		function buttonVolueUpPress() {
+		function buttonVolumeUpPress() {
 		    console.log("button volume up invoked.");
 		    invokeMPlayer("VOLUP");		    
 		}
