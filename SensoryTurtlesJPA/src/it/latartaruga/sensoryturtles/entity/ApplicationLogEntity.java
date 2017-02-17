@@ -10,13 +10,8 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-<<<<<<< HEAD
 @Table(name="application_log")
 @NamedQueries({ @NamedQuery(name = "ApplicationLogEntity.findByRoomTherapistMember", query = "select o from ApplicationLogEntity o where o.idROOM = :idROOMValue and o.therapist= :THERAPISTValue and o.member = :MEMBERValue")})
-=======
-@Table(name="APPLICATION_LOG")
-@NamedQuery(name="ApplicationLog.findAll", query="SELECT a FROM ApplicationLogEntity a")
->>>>>>> refs/remotes/origin/master
 public class ApplicationLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
