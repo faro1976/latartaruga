@@ -27,7 +27,7 @@ public class MPlayerResource {
 	@GET
 	@Path("/start")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response start(@QueryParam("file")String file) {
+    public Response start(@QueryParam("idTherapist")String idTherapist, @QueryParam("idMember")String idMember,@QueryParam("file")String file) {
 		file = filePath + "/" + file;
 		logger.info("cmd media player, start play " + file);
 		try {
@@ -38,14 +38,15 @@ public class MPlayerResource {
 			System.out.println(errMsg);
 			return Response.status(Status.BAD_REQUEST).entity(errMsg).build();
 		}
-		return Response.ok("", MediaType.APPLICATION_JSON).build();						
+		return Response.ok("{}", MediaType.APPLICATION_JSON).build();						
 	}
 
 	@GET
 	@Path("/invoke")
     @Produces(MediaType.APPLICATION_JSON)
-    public void invoke(@QueryParam("cmd")String cmd) throws Exception{
+    public Response invoke(@QueryParam("idTherapist")String idTherapist, @QueryParam("idMember")String idMember, @QueryParam("cmd")String cmd) throws Exception{
 		logger.info("cmd media player, sending command ["+cmd+"]");
+		boolean ret = false;
 		try {
 			if (cmd.equals(MPlayerCmdEnum.EXIT.toString())) player.exit();
 			else if (cmd.equals(MPlayerCmdEnum.REWIND.toString())) player.rewind();
@@ -54,11 +55,15 @@ public class MPlayerResource {
 			else if (cmd.equals(MPlayerCmdEnum.FW.toString())) player.forward();			
 			else if (cmd.equals(MPlayerCmdEnum.PR.toString())) player.pauseResume();
 			else if (cmd.equals(MPlayerCmdEnum.VOLUP.toString())) player.volUp();
-			else if (cmd.equals(MPlayerCmdEnum.VOLDOWN.toString())) player.volDown();			
+			else if (cmd.equals(MPlayerCmdEnum.VOLDOWN.toString())) player.volDown();
+			ret = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
+			String errMsg = e.getMessage().replaceAll("\"", "");
+			return Response.status(Status.BAD_REQUEST).entity(errMsg).build();
 		}
+		return Response.ok("{}", MediaType.APPLICATION_JSON).build();
     }
 	
 }

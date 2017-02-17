@@ -7,6 +7,7 @@
 		<project>SensoryTurtlesClient</project>
 		<project>SensoryTurtlesJPA</project>
 		<project>SensoryTurtlesCore</project>
+		<project>SensoryTurtlesWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
