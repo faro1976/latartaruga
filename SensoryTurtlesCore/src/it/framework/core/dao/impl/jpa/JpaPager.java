@@ -103,7 +103,10 @@ public class JpaPager<E> implements IListPager<E>  {
 
 	@Override
 	public Long getTotalCount() {
-		if (jpqlQuery != null) {
+		if (query != null) {
+			TypedQuery<E> q=query;
+			return new Long(q.setFirstResult(0).setMaxResults(Integer.MAX_VALUE).getResultList().size());
+		} else if (jpqlQuery != null) {
 			String q = "select count(*) from (" + jpqlQuery + ")";
 			return em.createQuery(q, Long.class).getSingleResult();
 		} else {

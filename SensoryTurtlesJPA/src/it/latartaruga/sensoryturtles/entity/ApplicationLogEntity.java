@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="application_log")
-@NamedQuery(name="ApplicationLog.findAll", query="SELECT a FROM ApplicationLogEntity a")
+@NamedQueries({ @NamedQuery(name = "ApplicationLogEntity.findByRoomTherapistMember", query = "select o from ApplicationLogEntity o where o.idROOM = :idROOMValue and o.therapist= :THERAPISTValue and o.member = :MEMBERValue")})
 public class ApplicationLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

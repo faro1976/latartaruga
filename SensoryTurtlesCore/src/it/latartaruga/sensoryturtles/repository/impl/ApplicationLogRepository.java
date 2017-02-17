@@ -1,5 +1,6 @@
 package it.latartaruga.sensoryturtles.repository.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.TransactionAttribute;
@@ -7,13 +8,17 @@ import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 
+import it.framework.client.service.impl.SearchCriteriaApplicationLog;
 import it.framework.client.service.inferf.IOffset;
 import it.framework.core.dao.interf.IListPager;
 import it.framework.core.repository.impl.AbstractRepository;
+import it.framework.core.repository.impl.ListPager;
 import it.latartaruga.sensoryturtles.dao.interf.IApplicationLogDAO;
 import it.latartaruga.sensoryturtles.dao.interf.IDAOFactoryTurtles;
 import it.latartaruga.sensoryturtles.entity.ApplicationLogEntity;
+import it.latartaruga.sensoryturtles.entity.DeviceRelayEntity;
 import it.latartaruga.sensoryturtles.model.ApplicationLog;
+import it.latartaruga.sensoryturtles.model.Relay;
 import it.latartaruga.sensoryturtles.repository.interf.IApplicationLogRepository;
 
 @Dependent
@@ -90,5 +95,30 @@ public class ApplicationLogRepository extends AbstractRepository implements IApp
 		applicationLogEntity.setCmdDEVICE(applicationLog.getCmdDevice());
 		return applicationLogEntity;
 	}
+
+	private ApplicationLog createApplicationLog(ApplicationLogEntity applicationLogEntity) {
+		ApplicationLog applicationLog = new ApplicationLog();
+		applicationLog.setId(applicationLogEntity.getIdAPPLICATIONLOG());
+		applicationLog.setIdRoom(applicationLogEntity.getIdROOM());
+		applicationLog.setTherapist(applicationLogEntity.getTherapist());
+		applicationLog.setMember(applicationLogEntity.getMember());
+		applicationLog.setTypeDevice(applicationLogEntity.getTypeDEVICE());
+		applicationLog.setCmdDevice(applicationLogEntity.getCmdDEVICE());
+		applicationLog.setTimestamp(applicationLogEntity.getTsCMD());
+		return applicationLog;
+	}
+	
+	@Override
+	public IListPager<? extends ApplicationLog> findByRoomTherapistMember(IOffset offset,SearchCriteriaApplicationLog criteria) {
+		IListPager<? extends ApplicationLogEntity> listApplicationLogEntities = applicationLogDAO.findByRoomTherapistMember(offset,criteria);
+		List<ApplicationLog> listApplicationLogs= new ArrayList<>();
+		for (ApplicationLogEntity applicationLogEntity : listApplicationLogEntities.getResult()) {
+			listApplicationLogs.add(createApplicationLog(applicationLogEntity));
+		}
+		ListPager<ApplicationLog> retValue = getPager(listApplicationLogs, listApplicationLogEntities.getTotalCount());
+		return retValue;
+	}
+	
+
 
 }
